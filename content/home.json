@@ -1,11 +1,23 @@
 {
   "es": {
     "heroImage": "/assets/uploads/hero.webp",
-    "heroTitle": "Domina El Feed",
-    "tagline": "Más alcance,\nmás ventas",
-    "memberValue": "120+",
-    "memberCap": "Marcas que confían en nosotros",
+    "testiTitle": "Marcas que\ncrecen con nosotros",
     "memberImage": "/assets/uploads/brush.webp",
+    "facIcon": "/assets/uploads/swirl.webp",
+    "tile1": {
+      "name": "Sala de estrategia",
+      "desc": "Donde convertimos datos en decisiones y campañas.",
+      "image": "/assets/uploads/brush.webp"
+    },
+    "tile2": {
+      "name": "Laboratorio de contenido",
+      "desc": "Donde planeamos, producimos y editamos cada pieza.",
+      "image": "/assets/uploads/waves.webp"
+    },
+    "badgeBody": "Desde emprendedores que empiezan hasta empresas establecidas, nuestros clientes trabajan con nosotros porque los resultados se ven en sus números.",
+    "svcEyebrow": "Nuestros servicios",
+    "facBody": "Un equipo de estrategas, diseñadores y creadores de contenido que trabaja de cerca contigo, del brief a la publicación.",
+    "statsEyebrow": "En números",
     "coll": [
       {
         "brand": "Virtualiamn Social",
@@ -29,10 +41,31 @@
         "image": "/assets/uploads/liquid.webp"
       }
     ],
+    "tagline": "Más alcance,\nmás ventas",
+    "facTitle": "Conoce Nuestro\nEstudio\nCreativo",
+    "ctaBig": "¿Listos para\ncrecer?",
     "pctValue": "100%",
     "pctCap": "Estrategia hecha a la medida de tu marca",
+    "testiEyebrow": "Lo que dicen nuestros clientes",
+    "testimonials": [
+      {
+        "quote": "[Testimonio real de un cliente de redes sociales.]",
+        "name": "[Nombre del cliente]",
+        "role": "[Empresa] · Redes sociales"
+      },
+      {
+        "quote": "[Testimonio real de un cliente de publicidad pagada.]",
+        "name": "[Nombre del cliente]",
+        "role": "[Empresa] · Publicidad pagada"
+      },
+      {
+        "quote": "[Testimonio real de un cliente de branding o web.]",
+        "name": "[Nombre del cliente]",
+        "role": "[Empresa] · Branding y web"
+      }
+    ],
     "badgeTitle": "La agencia de las marcas que quieren crecer",
-    "badgeBody": "Desde emprendedores que empiezan hasta empresas establecidas, nuestros clientes trabajan con nosotros porque los resultados se ven en sus números.",
+    "memberValue": "120+",
     "trust": [
       {
         "word1": "Marketing",
@@ -62,23 +95,12 @@
         "image": "/assets/uploads/liquid.webp"
       }
     ],
-    "svcEyebrow": "Nuestros servicios",
+    "memberCap": "Marcas que confían en nosotros",
     "svcTitle": "Hecho para\ncada etapa",
-    "facIcon": "/assets/uploads/swirl.webp",
-    "facTitle": "Conoce Nuestro\nEstudio\nCreativo",
-    "facBody": "Un equipo de estrategas, diseñadores y creadores de contenido que trabaja de cerca contigo, del brief a la publicación.",
-    "tile1": {
-      "name": "Sala de estrategia",
-      "desc": "Donde convertimos datos en decisiones y campañas.",
-      "image": "/assets/uploads/brush.webp"
-    },
-    "tile2": {
-      "name": "Laboratorio de contenido",
-      "desc": "Donde planeamos, producimos y editamos cada pieza.",
-      "image": "/assets/uploads/waves.webp"
-    },
-    "statsEyebrow": "En números",
     "statsTitle": "Una agencia que\nlo mide todo",
+    "ctaEyebrow": "Empecemos",
+    "blurb": "Agencia de marketing digital que combina estrategia, creatividad y datos para hacer crecer tu marca.",
+    "heroTitle": "Domina El Feed Hoy",
     "stats": [
       {
         "value": "120+",
@@ -96,37 +118,27 @@
         "value": "2M+",
         "label": "Personas alcanzadas al mes"
       }
-    ],
-    "testiEyebrow": "Lo que dicen nuestros clientes",
-    "testiTitle": "Marcas que\ncrecen con nosotros",
-    "testimonials": [
-      {
-        "quote": "[Testimonio real de un cliente de redes sociales.]",
-        "name": "[Nombre del cliente]",
-        "role": "[Empresa] · Redes sociales"
-      },
-      {
-        "quote": "[Testimonio real de un cliente de publicidad pagada.]",
-        "name": "[Nombre del cliente]",
-        "role": "[Empresa] · Publicidad pagada"
-      },
-      {
-        "quote": "[Testimonio real de un cliente de branding o web.]",
-        "name": "[Nombre del cliente]",
-        "role": "[Empresa] · Branding y web"
-      }
-    ],
-    "ctaEyebrow": "Empecemos",
-    "ctaBig": "¿Listos para\ncrecer?",
-    "blurb": "Agencia de marketing digital que combina estrategia, creatividad y datos para hacer crecer tu marca."
+    ]
   },
   "en": {
     "heroImage": "/assets/uploads/hero.webp",
-    "heroTitle": "Own The Feed",
-    "tagline": "Show Up,\nSell More",
-    "memberValue": "120+",
-    "memberCap": "Brands that trust us",
+    "testiTitle": "Brands that\ngrow with us",
     "memberImage": "/assets/uploads/brush.webp",
+    "facIcon": "/assets/uploads/swirl.webp",
+    "tile1": {
+      "name": "Strategy Room",
+      "desc": "Where we turn data into decisions and campaigns.",
+      "image": "/assets/uploads/brush.webp"
+    },
+    "tile2": {
+      "name": "Content Lab",
+      "desc": "Where we plan, produce and edit every piece.",
+      "image": "/assets/uploads/waves.webp"
+    },
+    "badgeBody": "From first-time founders to established companies, clients work with us because the results show up in their numbers.",
+    "svcEyebrow": "Our services",
+    "facBody": "A team of strategists, designers and content creators working closely with you — from brief to launch.",
+    "statsEyebrow": "By the numbers",
     "coll": [
       {
         "brand": "Virtualiamn Social",
@@ -150,10 +162,31 @@
         "image": "/assets/uploads/liquid.webp"
       }
     ],
+    "tagline": "Show Up,\nSell More",
+    "facTitle": "Tour Our\nCreative\nStudio",
+    "ctaBig": "Ready to\ngrow?",
     "pctValue": "100%",
     "pctCap": "Strategy built around your brand",
+    "testiEyebrow": "What clients say",
+    "testimonials": [
+      {
+        "quote": "[A real testimonial from a social media client.]",
+        "name": "[Client name]",
+        "role": "[Company] · Social media"
+      },
+      {
+        "quote": "[A real testimonial from a paid ads client.]",
+        "name": "[Client name]",
+        "role": "[Company] · Paid advertising"
+      },
+      {
+        "quote": "[A real testimonial from a branding or web client.]",
+        "name": "[Client name]",
+        "role": "[Company] · Branding & web"
+      }
+    ],
     "badgeTitle": "Trusted by brands that want to grow",
-    "badgeBody": "From first-time founders to established companies, clients work with us because the results show up in their numbers.",
+    "memberValue": "120+",
     "trust": [
       {
         "word1": "Data-",
@@ -183,23 +216,12 @@
         "image": "/assets/uploads/liquid.webp"
       }
     ],
-    "svcEyebrow": "Our services",
+    "memberCap": "Brands that trust us",
     "svcTitle": "Built for\nevery stage",
-    "facIcon": "/assets/uploads/swirl.webp",
-    "facTitle": "Tour Our\nCreative\nStudio",
-    "facBody": "A team of strategists, designers and content creators working closely with you — from brief to launch.",
-    "tile1": {
-      "name": "Strategy Room",
-      "desc": "Where we turn data into decisions and campaigns.",
-      "image": "/assets/uploads/brush.webp"
-    },
-    "tile2": {
-      "name": "Content Lab",
-      "desc": "Where we plan, produce and edit every piece.",
-      "image": "/assets/uploads/waves.webp"
-    },
-    "statsEyebrow": "By the numbers",
     "statsTitle": "An agency that\nkeeps score",
+    "ctaEyebrow": "Get started",
+    "blurb": "A digital marketing agency combining strategy, creativity and data to grow your brand.",
+    "heroTitle": "Own The Feed",
     "stats": [
       {
         "value": "120+",
@@ -217,28 +239,6 @@
         "value": "2M+",
         "label": "People reached monthly"
       }
-    ],
-    "testiEyebrow": "What clients say",
-    "testiTitle": "Brands that\ngrow with us",
-    "testimonials": [
-      {
-        "quote": "[A real testimonial from a social media client.]",
-        "name": "[Client name]",
-        "role": "[Company] · Social media"
-      },
-      {
-        "quote": "[A real testimonial from a paid ads client.]",
-        "name": "[Client name]",
-        "role": "[Company] · Paid advertising"
-      },
-      {
-        "quote": "[A real testimonial from a branding or web client.]",
-        "name": "[Client name]",
-        "role": "[Company] · Branding & web"
-      }
-    ],
-    "ctaEyebrow": "Get started",
-    "ctaBig": "Ready to\ngrow?",
-    "blurb": "A digital marketing agency combining strategy, creativity and data to grow your brand."
+    ]
   }
 }
