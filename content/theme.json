@@ -1,0 +1,21 @@
+{
+  "colors": {
+    "brandDeep": "#0f2f63",
+    "brand": "#2563c9",
+    "brandLight": "#5790e6",
+    "accentTeal": "#0b6e97",
+    "background": "#ffffff",
+    "surface": "#f4f4f4",
+    "ink": "#0a0a0a",
+    "inkSoft": "#717784"
+  },
+  "fonts": {
+    "heading": "Onest",
+    "body": "Onest"
+  },
+  "logo": {
+    "text": "Virtualiamn",
+    "image": "/assets/uploads/artboard-2-copy-4-mvjwbpar.webp",
+    "size": "l"
+  }
+}
