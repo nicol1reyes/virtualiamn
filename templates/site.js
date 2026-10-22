@@ -14,7 +14,8 @@ fitFont();
 addEventListener("resize", fitFont);
 
 // smooth scroll + parallax
-const lenis = new Lenis({ smoothWheel: true });
+const PREVIEW = !!window.__PREVIEW__; // set by the visual editor
+const lenis = PREVIEW ? { raf() {} } : new Lenis({ smoothWheel: true });
 const plates = $$("[data-px]").map(el => {
   const [from, to] = el.dataset.px.split(",").map(Number);
   return { el, from, to, sec: el.closest("section") };
@@ -35,7 +36,8 @@ requestAnimationFrame(raf);
 const io = new IntersectionObserver(entries => {
   for (const e of entries) if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
 }, { rootMargin: "0px 0px -8% 0px" });
-$$(".rv, .rv-lines").forEach(el => io.observe(el));
+if (PREVIEW) { root.classList.add("preview"); $$(".rv, .rv-lines").forEach(el => el.classList.add("in")); }
+else $$(".rv, .rv-lines").forEach(el => io.observe(el));
 
 // language toggle (shared with the home page through localStorage)
 function setLang(l) {

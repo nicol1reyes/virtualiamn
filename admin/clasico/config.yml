@@ -1,0 +1,986 @@
+# Panel de edición de Virtualiamn (Decap CMS) — https://decapcms.org/docs/
+
+backend:
+  name: github
+  repo: nicol1reyes/virtualiamn
+  branch: main
+  commit_messages:
+    create: Crear {{collection}} “{{slug}}”
+    update: Actualizar {{collection}} “{{slug}}”
+    delete: Eliminar {{collection}} “{{slug}}”
+    uploadMedia: Subir imagen “{{path}}”
+    deleteMedia: Eliminar imagen “{{path}}”
+locale: es
+site_url: https://virtualiamn.com
+display_url: https://virtualiamn.com
+
+media_folder: static/assets/uploads
+public_folder: /assets/uploads
+i18n:
+  structure: single_file
+  locales:
+  - es
+  - en
+  default_locale: es
+collections:
+- name: inicio
+  label: Inicio
+  i18n: true
+  editor:
+    preview: false
+  files:
+  - name: home
+    label: Página de inicio
+    file: content/home.json
+    format: json
+    i18n: true
+    fields:
+    - label: Imagen de portada
+      name: heroImage
+      widget: image
+      i18n: duplicate
+    - label: Título grande
+      name: heroTitle
+      widget: string
+      i18n: true
+      hint: Corto, 2 a 4 palabras.
+    - label: Frase de portada
+      name: tagline
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Tarjetas que rotan en la portada
+      name: coll
+      widget: list
+      i18n: true
+      hint: Las imágenes de las listas se toman de la versión en español.
+      fields:
+      - label: Marca
+        name: brand
+        widget: string
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto del enlace
+        name: cta
+        widget: string
+      - label: Lleva a
+        name: link
+        widget: select
+        options:
+        - label: Redes sociales
+          value: redes-sociales
+        - label: Publicidad pagada
+          value: publicidad
+        - label: SEO y sitios web
+          value: seo-web
+        - label: Branding y contenido
+          value: branding
+      - label: Imagen
+        name: image
+        widget: image
+    - label: Tarjeta de marcas · cifra
+      name: memberValue
+      widget: string
+      i18n: duplicate
+    - label: Tarjeta de marcas · texto
+      name: memberCap
+      widget: string
+      i18n: true
+    - label: Tarjeta de marcas · imagen
+      name: memberImage
+      widget: image
+      i18n: duplicate
+    - label: Círculo · cifra
+      name: pctValue
+      widget: string
+      i18n: duplicate
+    - label: Círculo · texto
+      name: pctCap
+      widget: string
+      i18n: true
+    - label: 'Recuadro #01 · título'
+      name: badgeTitle
+      widget: string
+      i18n: true
+    - label: 'Recuadro #01 · texto'
+      name: badgeBody
+      widget: text
+      i18n: true
+    - label: Especialidades (carrusel con palabras grandes)
+      name: trust
+      widget: list
+      i18n: true
+      hint: Las imágenes de las listas se toman de la versión en español.
+      fields:
+      - label: Palabra 1 (arriba izquierda)
+        name: word1
+        widget: string
+      - label: Palabra 2 (arriba derecha)
+        name: word2
+        widget: string
+      - label: Palabra 3 (abajo izquierda, en negro)
+        name: word3
+        widget: string
+      - label: Palabra 4 (abajo derecha)
+        name: word4
+        widget: string
+      - label: Nombre en la tarjeta
+        name: name
+        widget: string
+      - label: Descripción en la tarjeta
+        name: role
+        widget: string
+      - label: Imagen
+        name: image
+        widget: image
+    - label: Servicios · etiqueta
+      name: svcEyebrow
+      widget: string
+      i18n: true
+    - label: Servicios · título
+      name: svcTitle
+      widget: text
+      i18n: true
+      hint: La lista de servicios sale de la sección Servicios. Cada renglón es una línea del título.
+    - label: Estudio · imagen pequeña
+      name: facIcon
+      widget: image
+      i18n: duplicate
+    - label: Estudio · título
+      name: facTitle
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Estudio · texto
+      name: facBody
+      widget: text
+      i18n: true
+    - label: Estudio · tarjeta 1
+      name: tile1
+      widget: object
+      i18n: true
+      fields:
+      - label: Nombre
+        name: name
+        widget: string
+      - label: Descripción
+        name: desc
+        widget: string
+      - label: Imagen
+        name: image
+        widget: image
+    - label: Estudio · tarjeta 2
+      name: tile2
+      widget: object
+      i18n: true
+      fields:
+      - label: Nombre
+        name: name
+        widget: string
+      - label: Descripción
+        name: desc
+        widget: string
+      - label: Imagen
+        name: image
+        widget: image
+    - label: Cifras · etiqueta
+      name: statsEyebrow
+      widget: string
+      i18n: true
+    - label: Cifras · título
+      name: statsTitle
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Cifras
+      name: stats
+      widget: list
+      i18n: true
+      hint: La cifra se toma de la versión en español; aquí traduces solo la descripción.
+      fields:
+      - label: Cifra (ej. 120+)
+        name: value
+        widget: string
+      - label: Descripción
+        name: label
+        widget: string
+    - label: Testimonios · etiqueta
+      name: testiEyebrow
+      widget: string
+      i18n: true
+    - label: Testimonios · título
+      name: testiTitle
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Testimonios
+      name: testimonials
+      widget: list
+      i18n: true
+      fields:
+      - label: Testimonio
+        name: quote
+        widget: text
+      - label: Nombre
+        name: name
+        widget: string
+      - label: Empresa o servicio
+        name: role
+        widget: string
+    - label: Cierre · etiqueta
+      name: ctaEyebrow
+      widget: string
+      i18n: true
+    - label: Cierre · frase grande
+      name: ctaBig
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Descripción de la agencia (pie de página)
+      name: blurb
+      widget: text
+      i18n: true
+- name: servicios
+  label: Servicios
+  i18n: true
+  editor:
+    preview: false
+  files:
+  - name: redes-sociales
+    label: Redes sociales
+    file: content/services/redes-sociales.json
+    format: json
+    i18n: true
+    fields:
+    - label: Orden
+      name: order
+      widget: number
+      value_type: int
+      i18n: duplicate
+      hint: 1 aparece primero.
+    - label: Nombre del servicio
+      name: name
+      widget: string
+      i18n: true
+    - label: Resumen (lista del inicio)
+      name: summary
+      widget: text
+      i18n: true
+    - label: Título de la página
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Qué incluye
+      name: includes
+      widget: list
+      i18n: true
+      fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Proceso (pasos)
+      name: process
+      widget: list
+      i18n: true
+      fields:
+      - label: Paso
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Ideal para
+      name: ideal
+      widget: list
+      i18n: true
+      fields:
+      - label: Texto
+        name: text
+        widget: string
+    - label: Preguntas frecuentes
+      name: faq
+      widget: list
+      i18n: true
+      fields:
+      - label: Pregunta
+        name: question
+        widget: string
+      - label: Respuesta
+        name: answer
+        widget: text
+  - name: publicidad
+    label: Publicidad pagada
+    file: content/services/publicidad.json
+    format: json
+    i18n: true
+    fields:
+    - label: Orden
+      name: order
+      widget: number
+      value_type: int
+      i18n: duplicate
+      hint: 1 aparece primero.
+    - label: Nombre del servicio
+      name: name
+      widget: string
+      i18n: true
+    - label: Resumen (lista del inicio)
+      name: summary
+      widget: text
+      i18n: true
+    - label: Título de la página
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Qué incluye
+      name: includes
+      widget: list
+      i18n: true
+      fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Proceso (pasos)
+      name: process
+      widget: list
+      i18n: true
+      fields:
+      - label: Paso
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Ideal para
+      name: ideal
+      widget: list
+      i18n: true
+      fields:
+      - label: Texto
+        name: text
+        widget: string
+    - label: Preguntas frecuentes
+      name: faq
+      widget: list
+      i18n: true
+      fields:
+      - label: Pregunta
+        name: question
+        widget: string
+      - label: Respuesta
+        name: answer
+        widget: text
+  - name: seo-web
+    label: SEO y sitios web
+    file: content/services/seo-web.json
+    format: json
+    i18n: true
+    fields:
+    - label: Orden
+      name: order
+      widget: number
+      value_type: int
+      i18n: duplicate
+      hint: 1 aparece primero.
+    - label: Nombre del servicio
+      name: name
+      widget: string
+      i18n: true
+    - label: Resumen (lista del inicio)
+      name: summary
+      widget: text
+      i18n: true
+    - label: Título de la página
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Qué incluye
+      name: includes
+      widget: list
+      i18n: true
+      fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Proceso (pasos)
+      name: process
+      widget: list
+      i18n: true
+      fields:
+      - label: Paso
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Ideal para
+      name: ideal
+      widget: list
+      i18n: true
+      fields:
+      - label: Texto
+        name: text
+        widget: string
+    - label: Preguntas frecuentes
+      name: faq
+      widget: list
+      i18n: true
+      fields:
+      - label: Pregunta
+        name: question
+        widget: string
+      - label: Respuesta
+        name: answer
+        widget: text
+  - name: branding
+    label: Branding y contenido
+    file: content/services/branding.json
+    format: json
+    i18n: true
+    fields:
+    - label: Orden
+      name: order
+      widget: number
+      value_type: int
+      i18n: duplicate
+      hint: 1 aparece primero.
+    - label: Nombre del servicio
+      name: name
+      widget: string
+      i18n: true
+    - label: Resumen (lista del inicio)
+      name: summary
+      widget: text
+      i18n: true
+    - label: Título de la página
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Qué incluye
+      name: includes
+      widget: list
+      i18n: true
+      fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Proceso (pasos)
+      name: process
+      widget: list
+      i18n: true
+      fields:
+      - label: Paso
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Ideal para
+      name: ideal
+      widget: list
+      i18n: true
+      fields:
+      - label: Texto
+        name: text
+        widget: string
+    - label: Preguntas frecuentes
+      name: faq
+      widget: list
+      i18n: true
+      fields:
+      - label: Pregunta
+        name: question
+        widget: string
+      - label: Respuesta
+        name: answer
+        widget: text
+- name: paginas
+  label: Páginas
+  i18n: true
+  editor:
+    preview: false
+  files:
+  - name: nosotros
+    label: Nosotros
+    file: content/pages/nosotros.json
+    format: json
+    i18n: true
+    fields:
+    - label: Título
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Misión
+      name: mission
+      widget: text
+      i18n: true
+    - label: Valores
+      name: values
+      widget: list
+      i18n: true
+      fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Cómo trabajamos (pasos)
+      name: steps
+      widget: list
+      i18n: true
+      fields:
+      - label: Paso
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Equipo
+      name: team
+      widget: list
+      i18n: true
+      hint: Nombre y foto se toman de la versión en español; en inglés traduces el rol.
+      fields:
+      - label: Nombre
+        name: name
+        widget: string
+      - label: Rol
+        name: role
+        widget: string
+      - label: Foto
+        name: photo
+        widget: image
+        required: false
+  - name: casos
+    label: Casos de éxito
+    file: content/pages/casos.json
+    format: json
+    i18n: true
+    fields:
+    - label: Título
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Casos
+      name: cases
+      widget: list
+      i18n: true
+      hint: Las imágenes de las listas se toman de la versión en español.
+      fields:
+      - label: Categoría
+        name: category
+        widget: string
+      - label: Cliente
+        name: client
+        widget: string
+      - label: Reto
+        name: challenge
+        widget: text
+      - label: Solución
+        name: solution
+        widget: text
+      - label: Resultado
+        name: result
+        widget: text
+      - label: Imagen
+        name: image
+        widget: image
+  - name: blog
+    label: Blog (portada)
+    file: content/pages/blog.json
+    format: json
+    i18n: true
+    fields:
+    - label: Título
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+  - name: empleos
+    label: Empleos
+    file: content/pages/empleos.json
+    format: json
+    i18n: true
+    fields:
+    - label: Título
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Áreas
+      name: areas
+      widget: list
+      i18n: true
+      fields:
+      - label: Área
+        name: text
+        widget: string
+    - label: Lo que valoramos
+      name: values
+      widget: list
+      i18n: true
+      fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+    - label: Vacantes
+      name: openings
+      widget: text
+      i18n: true
+  - name: privacidad
+    label: Política de privacidad
+    file: content/pages/privacidad.json
+    format: json
+    i18n: true
+    fields:
+    - label: Título
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Secciones
+      name: sections
+      widget: list
+      i18n: true
+      fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+  - name: terminos
+    label: Términos y condiciones
+    file: content/pages/terminos.json
+    format: json
+    i18n: true
+    fields:
+    - label: Título
+      name: title
+      widget: text
+      i18n: true
+      hint: Cada renglón se muestra como una línea del título.
+    - label: Introducción
+      name: lede
+      widget: text
+      i18n: true
+    - label: Imagen de portada
+      name: image
+      widget: image
+      i18n: duplicate
+    - label: Encuadre de la imagen
+      name: imagePosition
+      widget: select
+      i18n: duplicate
+      default: 50% 50%
+      options:
+      - label: Centro
+        value: 50% 50%
+      - label: Arriba
+        value: 50% 20%
+      - label: Abajo
+        value: 50% 80%
+    - label: Secciones
+      name: sections
+      widget: list
+      i18n: true
+      fields:
+      - label: Título
+        name: title
+        widget: string
+      - label: Texto
+        name: text
+        widget: text
+- name: blog
+  label: Artículos del blog
+  label_singular: Artículo
+  folder: content/posts
+  format: json
+  extension: json
+  create: true
+  i18n: true
+  slug: '{{slug}}'
+  identifier_field: title
+  summary: '{{title}}'
+  sortable_fields:
+  - date
+  - title
+  editor:
+    preview: false
+  fields:
+  - label: Título
+    name: title
+    widget: string
+    i18n: true
+  - label: Categoría
+    name: category
+    widget: string
+    i18n: true
+  - label: Resumen
+    name: excerpt
+    widget: text
+    i18n: true
+  - label: Imagen
+    name: image
+    widget: image
+    i18n: duplicate
+  - label: Fecha
+    name: date
+    widget: datetime
+    format: YYYY-MM-DD
+    date_format: DD/MM/YYYY
+    time_format: false
+    i18n: duplicate
+  - label: Publicado
+    name: published
+    widget: boolean
+    default: false
+    i18n: duplicate
+    hint: Si está apagado, aparece en el blog como “Próximamente”.
+  - label: Contenido
+    name: body
+    widget: markdown
+    i18n: true
+    required: false
+- name: ajustes
+  label: Datos de contacto y redes
+  editor:
+    preview: false
+  files:
+  - name: settings
+    label: Datos de contacto y redes
+    file: content/settings.json
+    format: json
+    fields:
+    - label: Correo
+      name: email
+      widget: string
+    - label: Teléfono
+      name: phone
+      widget: string
+    - label: Ciudad (ES)
+      name: city_es
+      widget: string
+    - label: Ciudad (EN)
+      name: city_en
+      widget: string
+    - label: Instagram (URL completa)
+      name: instagram
+      widget: string
+      required: false
+      hint: Déjalo vacío para ocultar el enlace.
+    - label: TikTok (URL completa)
+      name: tiktok
+      widget: string
+      required: false
+    - label: Facebook (URL completa)
+      name: facebook
+      widget: string
+      required: false
+    - label: LinkedIn (URL completa)
+      name: linkedin
+      widget: string
+      required: false

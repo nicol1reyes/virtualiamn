@@ -326,6 +326,8 @@ main{width:100%;overflow-x:clip;padding:.5rem}
 .m-ok p{font-size:.875rem;color:var(--ink-soft);margin-top:.5rem;line-height:1.5}
 .m-ok .pill{margin-top:1.25rem}
 /* ---------- language toggle ---------- */
+.preview .loader{display:none}
+.preview .ri,.preview .wf{transition:none!important}
 .lang-btn{height:2.5rem;min-width:2.5rem;padding:0 .75rem;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,.3);font-size:.75rem;font-weight:500;letter-spacing:.1em;color:#fff;transition:background-color .25s,border-color .25s}
 .lang-btn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.5)}
 .menu-tr{display:flex;align-items:center;gap:1rem}
@@ -578,6 +580,8 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const root = document.documentElement;
 const isMobile = () => matchMedia("(max-width: 768px)").matches;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const PREVIEW = !!window.__PREVIEW__; // set by the visual editor
+if (PREVIEW) root.classList.add("preview");
 
 /* ---------- images (abstract art) ---------- */
 /*@@IMG@@*/
@@ -586,7 +590,7 @@ addEventListener("error", e => { if (e.target.tagName === "IMG") e.target.style.
 
 /* ---------- copy (ES / EN) ---------- */
 /*@@T@@*/
-let lang = (() => { try { const v = localStorage.getItem("vlang"); if (v === "es" || v === "en") return v; } catch (e) {} return (navigator.language || "es").toLowerCase().startsWith("en") ? "en" : "es"; })();
+let lang = window.__LANG__ || (() => { try { const v = localStorage.getItem("vlang"); if (v === "es" || v === "en") return v; } catch (e) {} return (navigator.language || "es").toLowerCase().startsWith("en") ? "en" : "es"; })();
 const t = k => T[lang][k];
 
 /* ---------- adaptive rem (scale up above 1920) ---------- */
@@ -610,8 +614,10 @@ addEventListener("resize", fitTitle);
 
 /* ---------- Lenis + scroll lock ---------- */
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-window.scrollTo(0, 0);
-const lenis = new Lenis({ smoothWheel: true });
+if (!PREVIEW) window.scrollTo(0, 0);
+const lenis = PREVIEW
+  ? { raf() {}, start() {}, stop() {}, scrollTo(t) { if (t && t.scrollIntoView) t.scrollIntoView(); } }
+  : new Lenis({ smoothWheel: true });
 let locks = 0;
 function lock() { if (++locks === 1) { lenis.stop(); root.classList.add("locked"); } }
 function unlock() { if (locks > 0 && --locks === 0) { root.classList.remove("locked"); lenis.start(); } }
@@ -631,6 +637,7 @@ class Spring {
   }
   to(target, delay = 0) {
     clearTimeout(this.tm);
+    if (PREVIEW && !this.live) { for (const k in target) this.s[k] = { x: target[k], v: 0, g: target[k] }; this.render(); return; }
     const go = () => {
       for (const k in target) { if (!this.s[k]) this.s[k] = { x: target[k], v: 0, g: target[k] }; this.s[k].g = target[k]; }
       running.add(this);
@@ -694,6 +701,7 @@ const io = new IntersectionObserver(entries => {
   for (const e of entries) if (e.isIntersecting) { io.unobserve(e.target); e.target._seen = true; tryPlay(e.target); }
 }, { rootMargin: "0px 0px -8% 0px" });
 function register(el, play, gate) {
+  if (PREVIEW) { el._played = true; play(); return; }
   el._play = play; el._gate = !!gate;
   if (gate) gated.push(el);
   io.observe(el);
@@ -798,6 +806,7 @@ function collCard(i) {
   const d = t("coll")[i];
   const el = document.createElement("div");
   el.className = "coll-card";
+  if (PREVIEW) el.dataset.edit = "home|coll." + i;
   el.innerHTML = `<img class="cc-img" src="${IMG.coll[i]}" alt="${d.alt}"><div class="cc-txt"><div><div class="cc-brand">${d.brand}</div><div class="cc-title">${d.title}</div></div><a class="cc-cta" href="${d.href}">${d.cta} →</a></div>`;
   return el;
 }
@@ -843,6 +852,7 @@ function trustText() {
 }
 const firstImg = new Image(); firstImg.src = IMG.trust[0]; firstImg.loading = "lazy"; media.append(firstImg);
 trustText();
+if (PREVIEW) $(".coach").dataset.edit = "home|trust.0";
 const tDots = makeDots($("#t-dots"), IMG.trust.length, i => setTrust(i));
 tDots(0);
 function setTrust(i) {
@@ -857,6 +867,7 @@ function setTrust(i) {
   trustText();
   refire(ghost);
   tDots(i);
+  if (PREVIEW) $(".coach").dataset.edit = "home|trust." + i;
 }
 $("#t-prev").addEventListener("click", () => setTrust(ti - 1));
 $("#t-next").addEventListener("click", () => setTrust(ti + 1));
@@ -981,7 +992,7 @@ addEventListener("keydown", e => {
 });
 
 /* ---------- loader ---------- */
-const MIN_VISIBLE_MS = reduced ? 200 : 1400, MAX_VISIBLE_MS = 2600, EXIT_MS = reduced ? 0 : 850;
+const MIN_VISIBLE_MS = PREVIEW ? 0 : reduced ? 200 : 1400, MAX_VISIBLE_MS = PREVIEW ? 0 : 2600, EXIT_MS = PREVIEW || reduced ? 0 : 850;
 const loader = $("#loader");
 lock();
 new Spring($(".ld-mark", loader), { opacity: 0, y: 16 }, { t: 200, f: 22 }).to({ opacity: 1, y: 0 });
