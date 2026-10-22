@@ -27,18 +27,18 @@
         "image": "/assets/uploads/waves.webp"
       },
       {
-        "brand": "Virtualiamn Ads",
-        "title": "Campañas que venden",
-        "cta": "Ver resultados",
-        "link": "publicidad",
-        "image": "/assets/uploads/ice.webp"
-      },
-      {
         "brand": "Virtualiamn Web",
         "title": "Sitios que posicionan",
         "cta": "Ver proyectos",
         "link": "seo-web",
         "image": "/assets/uploads/liquid.webp"
+      },
+      {
+        "brand": "Virtualiamn Ads",
+        "title": "Campañas que venden",
+        "cta": "Ver resultados",
+        "link": "publicidad",
+        "image": "/assets/uploads/ice.webp"
       }
     ],
     "tagline": "Más alcance,\nmás ventas",
@@ -148,18 +148,18 @@
         "image": "/assets/uploads/waves.webp"
       },
       {
-        "brand": "Virtualiamn Ads",
-        "title": "Campaigns that sell",
-        "cta": "See results",
-        "link": "publicidad",
-        "image": "/assets/uploads/ice.webp"
-      },
-      {
         "brand": "Virtualiamn Web",
         "title": "Sites that rank",
         "cta": "View projects",
         "link": "seo-web",
         "image": "/assets/uploads/liquid.webp"
+      },
+      {
+        "brand": "Virtualiamn Ads",
+        "title": "Campaigns that sell",
+        "cta": "See results",
+        "link": "publicidad",
+        "image": "/assets/uploads/ice.webp"
       }
     ],
     "tagline": "Show Up,\nSell More",
