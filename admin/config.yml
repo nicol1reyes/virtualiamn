@@ -2,7 +2,7 @@
 # Cambia GITHUB_USUARIO por tu usuario de GitHub.
 backend:
   name: github
-  repo: GITHUB_USUARIO/virtualiamn
+  repo: nicol1reyes/virtualiamn
   branch: main
   commit_messages:
     create: Crear {{collection}} “{{slug}}”
