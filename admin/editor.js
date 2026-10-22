@@ -1,5 +1,5 @@
 // Virtualiamn — visual editor (live preview, click-to-edit, publish to GitHub → Netlify)
-import { render, BUILTINS, DEFAULT_LAYOUTS, BLOCK_TYPES, pageKind } from "./render.mjs";
+import { render, BUILTINS, DEFAULT_LAYOUTS, BLOCK_TYPES, pageKind, THEME_DEFAULT, themeOf } from "./render.mjs";
 import { SCHEMAS, homeKey, HOME_IMAGES } from "./schema.js";
 
 const REPO = "nicol1reyes/virtualiamn";
@@ -48,6 +48,7 @@ const ICONS = {
   grip: '<circle cx="9" cy="6" r="1.2"/><circle cx="15" cy="6" r="1.2"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/><circle cx="9" cy="18" r="1.2"/><circle cx="15" cy="18" r="1.2"/>',
   eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
   "eye-off": '<path d="M3 3l18 18M10.6 5.1A10.9 10.9 0 0112 5c6.4 0 10 7 10 7a17.8 17.8 0 01-3.2 4.1M6.6 6.6A17.6 17.6 0 002 12s3.6 7 10 7a10 10 0 005.4-1.6M9.9 9.9a3 3 0 004.2 4.2"/>',
+  palette: '<path d="M12 3a9 9 0 100 18c1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.7-1.6 1.6-1.6H16a5 5 0 005-5C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="15" cy="7" r="1.2"/>',
   copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/>',
 };
 const ic = name => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ""}</svg>`;
@@ -93,11 +94,13 @@ const serialize = data => JSON.stringify(data, null, 2) + "\n";
 function pageFile(id) {
   if (id === "home") return "content/home.json";
   if (id === "settings") return "content/settings.json";
+  if (id === "theme") return "content/theme.json";
   return `content/${id}.json`; // services/x, pages/x, posts/x
 }
 function pageSchema(id) {
   if (id === "home") return SCHEMAS.home;
   if (id === "settings") return SCHEMAS.settings;
+  if (id === "theme") return SCHEMAS.theme;
   const [kind, slug] = id.split("/");
   if (kind === "services") return SCHEMAS.service;
   if (kind === "posts") return SCHEMAS.post;
@@ -105,7 +108,7 @@ function pageSchema(id) {
   return SCHEMAS[slug];
 }
 function pagePreview(id) {
-  if (id === "home" || id === "settings") return "index.html";
+  if (id === "home" || id === "settings" || id === "theme") return "index.html";
   const [kind, slug] = id.split("/");
   if (kind === "posts") return `blog/${slug}.html`;
   return `${slug}.html`;
@@ -114,6 +117,7 @@ const fileData = id => S.files[pageFile(id)]?.data;
 function pageName(id) {
   if (id === "home") return "Inicio";
   if (id === "settings") return "Datos de contacto y redes";
+  if (id === "theme") return "Tema: colores, tipografía y logo";
   const d = fileData(id);
   const [kind, slug] = id.split("/");
   if (kind === "services") return d?.es?.name || slug;
@@ -212,6 +216,7 @@ async function boot() {
       if (p.startsWith("content/")) S.files[p] = { data: JSON.parse(txt), original: txt.endsWith("\n") ? txt : txt + "\n" };
     }
     for (const f of Object.values(S.files)) f.original = serialize(JSON.parse(f.original));
+    if (!S.files["content/theme.json"]) { const t = themeOf(THEME_DEFAULT); S.files["content/theme.json"] = { data: t, original: serialize(t) }; }
     if (!DEV) {
       const user = await gh("GET", "/user");
       $("#user-img").src = user.avatar_url; $("#user-name").textContent = user.name || user.login;
@@ -223,7 +228,7 @@ async function boot() {
     return showLogin("No pudimos cargar el sitio. Revisa tu conexión e inténtalo de nuevo.");
   }
   const saved = store.get("v_editor_page");
-  if (saved && (saved === "home" || saved === "settings" || S.files[pageFile(saved)])) S.page = saved;
+  if (saved && S.files[pageFile(saved)]) S.page = saved;
   $("#loading").hidden = true;
   $("#app").hidden = false;
   wireTopbar();
@@ -287,7 +292,7 @@ function buildPageMenu() {
     `<div class="menu-group">Servicios</div>`, ...serviceIds().map(id => item(id, "page")),
     `<div class="menu-group">Páginas</div>`, ...["nosotros", "casos", "empleos", "blog", "privacidad", "terminos"].filter(s => S.files[`content/pages/${s}.json`]).map(s => item(`pages/${s}`, "page")),
     `<div class="menu-group">Artículos del blog</div>`, ...posts.map(id => item(id, "post")),
-    `<div class="menu-sep"></div>`, item("settings", "settings"),
+    `<div class="menu-sep"></div>`, item("theme", "palette"), item("settings", "settings"),
   ].join("");
   $$("[data-page]", menu).forEach(b => b.addEventListener("click", () => { menu.hidden = true; goPage(b.dataset.page); }));
 }
@@ -480,7 +485,9 @@ function renderSectionList(sb, schema) {
       <p class="panel-hint">Arrastra las secciones para cambiar el orden. Haz clic sobre un texto o imagen de la vista previa para editarlo.</p>
     </div>
     <div class="sb-foot">
-      ${isPost ? `<button class="btn btn-critical" type="button" id="del-post">${ic("trash")} Eliminar artículo</button>` : `<button class="sec-item" type="button" id="go-settings">${ic("settings")}<span>Datos de contacto y redes</span><span class="chev">${ic("chevron")}</span></button>`}
+      ${isPost ? `<button class="btn btn-critical" type="button" id="del-post">${ic("trash")} Eliminar artículo</button>` : ""}
+      ${S.page !== "theme" ? `<button class="sec-item" type="button" id="go-theme">${ic("palette")}<span>Tema: colores, tipografía y logo</span><span class="chev">${ic("chevron")}</span></button>` : ""}
+      ${S.page !== "settings" && !isPost ? `<button class="sec-item" type="button" id="go-settings">${ic("settings")}<span>Datos de contacto y redes</span><span class="chev">${ic("chevron")}</span></button>` : ""}
     </div>`;
   $$("[data-sec]", sb).forEach(b => b.addEventListener("click", () => { S.section = b.dataset.sec; renderSidebar(); }));
   $$("[data-open]", sb).forEach(b => b.addEventListener("click", () => { const m = sectionMeta(getLayout()[+b.dataset.open]); if (m.section) { S.section = m.section.id; renderSidebar(); } }));
@@ -499,6 +506,7 @@ function renderSectionList(sb, schema) {
   $("#add-sec")?.addEventListener("click", () => { const p = $("#type-picker"); p.hidden = !p.hidden; });
   $$("[data-type]", sb).forEach(b => b.addEventListener("click", () => { const id = addBlock(b.dataset.type); S.section = id; renderSidebar(); renderPreview(); toast("Sección agregada al final de la página."); }));
   $("#go-settings")?.addEventListener("click", () => goPage("settings"));
+  $("#go-theme")?.addEventListener("click", () => goPage("theme"));
   $("#del-post")?.addEventListener("click", deletePost);
   if (isBlog) wirePostsBlock(sb);
 }
@@ -643,6 +651,12 @@ function fieldEl(f, path, schema, sharedParent = false) {
   } else if (f.t === "textarea" || f.t === "markdown") {
     wrap.innerHTML = `${label}<textarea class="textarea${f.t === "markdown" ? " md" : ""}" id="${id}" rows="${f.lines ? 2 : 4}"${placeholder}>${escHtml(val ?? "")}</textarea>${hintHtml}`;
     $("textarea", wrap).addEventListener("input", e => writeVal(path, e.target.value, shared));
+  } else if (f.t === "color") {
+    const v = /^#[0-9a-fA-F]{6}$/.test(val || "") ? val : "#000000";
+    wrap.innerHTML = `${label}<div class="color-field"><input type="color" value="${v}" aria-label="${escHtml(f.l)}"><input class="input" id="${id}" value="${escHtml(val ?? "")}" maxlength="7" spellcheck="false"></div>${hintHtml}`;
+    const [picker, hex] = $$("input", wrap);
+    picker.addEventListener("input", () => { hex.value = picker.value; writeVal(path, picker.value, true); });
+    hex.addEventListener("input", () => { if (/^#[0-9a-fA-F]{6}$/.test(hex.value)) { picker.value = hex.value; writeVal(path, hex.value.toLowerCase(), true); } });
   } else if (f.t === "select") {
     wrap.innerHTML = `${label}<select class="select" id="${id}">${f.options.map(o => `<option value="${escHtml(o.value)}"${o.value === val ? " selected" : ""}>${escHtml(o.label)}</option>`).join("")}</select>${hintHtml}`;
     $("select", wrap).addEventListener("change", e => writeVal(path, e.target.value, shared));
@@ -779,7 +793,7 @@ function contentForRender() {
     else if ((m = p.match(/^content\/pages\/(.+)\.json$/))) pages[m[1]] = f.data;
     else if ((m = p.match(/^content\/posts\/(.+)\.json$/))) posts.push({ slug: m[1], ...f.data });
   }
-  return { settings: S.files["content/settings.json"]?.data || {}, home: S.files["content/home.json"].data, ui: S.templates.ui, services: svc, pages, posts,
+  return { settings: S.files["content/settings.json"]?.data || {}, theme: S.files["content/theme.json"]?.data, home: S.files["content/home.json"].data, ui: S.templates.ui, services: svc, pages, posts,
     templates: { index: S.templates.index, siteJs: S.templates.siteJs } };
 }
 function renderPreview(resetScroll = false) {
@@ -826,6 +840,7 @@ function resolveKey(key) {
   if (file === "settings" && path === "city") path = S.lang === "en" ? "city_en" : "city_es";
   if (file === "home") return { page: "home", path };
   if (file === "settings") return { page: "settings", path };
+  if (file === "theme") return { page: "theme", path };
   return { page: file, path };
 }
 function openKey(rawKey) {
@@ -870,7 +885,7 @@ function changes() {
   for (const p of Object.keys(S.uploads)) out.push({ path: p, page: null, kind: "upload" });
   return out;
 }
-const pageIdOf = p => p === "content/home.json" ? "home" : p === "content/settings.json" ? "settings" : p.replace(/^content\//, "").replace(/\.json$/, "");
+const pageIdOf = p => p === "content/home.json" ? "home" : p === "content/settings.json" ? "settings" : p === "content/theme.json" ? "theme" : p.replace(/^content\//, "").replace(/\.json$/, "");
 function changed() { renderPreview(); updateStatus(); }
 function updateStatus() {
   const n = changes().filter(c => c.kind !== "upload").length + (Object.keys(S.uploads).length ? 1 : 0);

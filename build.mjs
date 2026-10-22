@@ -11,6 +11,7 @@ const jsonFiles = dir => fs.readdirSync(path.join(ROOT, dir)).filter(f => f.ends
 
 const content = {
   settings: read("content/settings.json"),
+  theme: fs.existsSync(path.join(ROOT, "content/theme.json")) ? read("content/theme.json") : null,
   home: read("content/home.json"),
   ui: read("templates/ui.json"),
   services: jsonFiles("content/services").map(f => ({ slug: f.replace(/\.json$/, ""), ...read(`content/services/${f}`) })),

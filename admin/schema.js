@@ -1,3 +1,5 @@
+import { FONT_OPTIONS } from "./render.mjs";
+
 // Fields shown in the visual editor, grouped in sections like a theme editor.
 // t: text | textarea | image | select | number | toggle | markdown | list | group
 // shared: same value in both languages (images, numbers, links)
@@ -141,6 +143,30 @@ export const SCHEMAS = {
         { k: "image", t: "image", l: "Imagen", shared: true },
       ] },
       { id: "body", icon: "text", label: "Contenido", fields: [{ k: "body", t: "markdown", l: "Contenido", hint: "## Subtítulo · **negrita** · - lista · [enlace](https://…)" }] },
+    ],
+  },
+  theme: {
+    single: true,
+    sections: [
+      { id: "colors", icon: "palette", label: "Colores", hint: "Los cambios se ven al instante en la vista previa.", fields: [
+        { k: "colors.brandDeep", t: "color", l: "Color principal", hint: "Portada, cifras, pie de página y menú." },
+        { k: "colors.brand", t: "color", l: "Color de acento", hint: "Puntos, números y detalles." },
+        { k: "colors.brandLight", t: "color", l: "Acento claro", hint: "Botones al pasar el mouse y detalles sobre el color principal." },
+        { k: "colors.accentTeal", t: "color", l: "Acento secundario", hint: "Etiqueta de algunas tarjetas de imagen." },
+        { k: "colors.background", t: "color", l: "Fondo" },
+        { k: "colors.surface", t: "color", l: "Fondo de tarjetas y bloques" },
+        { k: "colors.ink", t: "color", l: "Texto" },
+        { k: "colors.inkSoft", t: "color", l: "Texto secundario" },
+      ] },
+      { id: "fonts", icon: "text", label: "Tipografía", fields: [
+        { k: "fonts.heading", t: "select", l: "Títulos", options: FONT_OPTIONS.map(f => ({ value: f.name, label: f.name })) },
+        { k: "fonts.body", t: "select", l: "Texto", options: FONT_OPTIONS.map(f => ({ value: f.name, label: f.name })) },
+      ] },
+      { id: "logo", icon: "image", label: "Logo", hint: "Si subes una imagen, reemplaza el ícono y el nombre. Usa un PNG o SVG con fondo transparente, en blanco o en un color que se vea sobre el azul.", fields: [
+        { k: "logo.text", t: "text", l: "Nombre de la marca" },
+        { k: "logo.image", t: "image", l: "Imagen del logo" },
+        { k: "logo.size", t: "select", l: "Tamaño del logo", options: [{ value: "s", label: "Pequeño" }, { value: "m", label: "Mediano" }, { value: "l", label: "Grande" }] },
+      ] },
     ],
   },
   settings: {

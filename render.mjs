@@ -57,6 +57,35 @@ export const BLOCK_TYPES = {
   cta: { label: "Llamado a la acción", desc: "Banda azul con botón para agendar una llamada." },
 };
 
+/* ------------------------------------------------------------------ theme (colors, fonts, logo) */
+export const THEME_DEFAULT = {
+  colors: { brandDeep: "#0f2f63", brand: "#2563c9", brandLight: "#5790e6", accentTeal: "#0b6e97", background: "#ffffff", surface: "#f4f4f4", ink: "#0a0a0a", inkSoft: "#717784" },
+  fonts: { heading: "Onest", body: "Onest" },
+  logo: { text: "Virtualiamn", image: "", size: "m" },
+};
+export const FONT_OPTIONS = [
+  { name: "Onest", w: "400;500" }, { name: "Inter", w: "400;500" }, { name: "DM Sans", w: "400;500" }, { name: "Manrope", w: "400;500" },
+  { name: "Plus Jakarta Sans", w: "400;500" }, { name: "Poppins", w: "400;500" }, { name: "Montserrat", w: "400;500" }, { name: "Sora", w: "400;500" },
+  { name: "Space Grotesk", w: "400;500" }, { name: "Bricolage Grotesque", w: "400;500" }, { name: "Outfit", w: "400;500" }, { name: "Urbanist", w: "400;500" },
+  { name: "Playfair Display", w: "400;500" }, { name: "Fraunces", w: "400;500" }, { name: "DM Serif Display", w: "400" }, { name: "Instrument Serif", w: "400" },
+];
+const HEAD_SEL = ".hero-title,.tagline,.ghost,.h2,.pname,.mem-v,.stat-v,.f-big,.m-title,.menu-nav a,.ph-title,.statement,.ctab-t,.card h3,.case h3,.post h3,.lg h2,.article h2,.article h3,.pct b,.badge h3,.tcard blockquote";
+const LOGO_H = { s: "1.125rem", m: "1.5rem", l: "2rem" };
+export function themeOf(raw) {
+  const t = raw || {};
+  return { colors: { ...THEME_DEFAULT.colors, ...(t.colors || {}) }, fonts: { ...THEME_DEFAULT.fonts, ...(t.fonts || {}) }, logo: { ...THEME_DEFAULT.logo, ...(t.logo || {}) } };
+}
+function themeHead(theme) {
+  const { colors: c, fonts: f, logo } = theme;
+  const fams = [...new Set([f.heading, f.body])].map(n => FONT_OPTIONS.find(o => o.name === n) || { name: n, w: "400" });
+  const href = "https://fonts.googleapis.com/css2?" + fams.map(o => `family=${encodeURIComponent(o.name).replace(/%20/g, "+")}:wght@${o.w}`).join("&") + "&display=swap";
+  const q = n => `"${String(n).replace(/["\\<>]/g, "")}"`;
+  const col = v => (/^#[0-9a-fA-F]{3,8}$/.test(v || "") ? v : "#000");
+  return `<link href="${href}" rel="stylesheet"><style id="theme">:root{--brand-deep:${col(c.brandDeep)};--brand:${col(c.brand)};--brand-light:${col(c.brandLight)};--accent-teal:${col(c.accentTeal)};--background:${col(c.background)};--surface:${col(c.surface)};--ink:${col(c.ink)};--foreground:${col(c.ink)};--ink-soft:${col(c.inkSoft)};--font-body:${q(f.body)},system-ui,sans-serif;--font-head:${q(f.heading)},system-ui,sans-serif;--logo-h:${LOGO_H[logo.size] || LOGO_H.m}}
+${HEAD_SEL}{font-family:var(--font-head)}
+.logo-img{height:var(--logo-h);width:auto;max-width:12rem;object-fit:contain;display:block}</style>`;
+}
+
 export function pageKind(id) {
   if (id === "home") return "home";
   const [kind, slug] = String(id).split("/");
@@ -74,6 +103,11 @@ export function pageKind(id) {
 export function render(c, opts = {}) {
   const { settings = {}, home, ui, templates } = c;
   const preview = !!opts.preview;
+  const theme = themeOf(c.theme);
+  const THEME_HEAD = themeHead(theme);
+  const brandText = theme.logo.text || "Virtualiamn";
+  const logoImg = theme.logo.image ? `<img class="logo-img" src="${esc(theme.logo.image)}" alt="${esc(brandText)}">` : "";
+  const BRAND = logoImg || `${MARK}${esc(brandText)}`;
   const services = [...(c.services || [])].sort((a, b) => (a.es?.order ?? 99) - (b.es?.order ?? 99));
   const pages = c.pages || {};
   const posts = [...(c.posts || [])].sort((a, b) => String(b.es?.date).localeCompare(String(a.es?.date)));
@@ -97,7 +131,7 @@ export function render(c, opts = {}) {
     <a href="/nosotros.html">${L("Nosotros", "About")}</a>
     <a href="/casos.html">${L("Casos", "Work")}</a>
   </nav>
-  <div class="hdr-brand"><a href="/index.html" class="brand" aria-label="Virtualiamn">${MARK}Virtualiamn</a></div>
+  <div class="hdr-brand"><a href="/index.html" class="brand" aria-label="${esc(brandText)}"${ED("theme|logo.text")}>${BRAND}</a></div>
   <div class="hdr-r">
     <button class="lang-btn" type="button" data-lang-toggle><span data-l="es" aria-label="Switch to English">EN</span><span data-l="en" aria-label="Cambiar a español">ES</span></button>
     <a class="hdr-book" href="${CTA}">${L("Agenda una llamada", "Book a call")}</a>
@@ -114,7 +148,7 @@ export function render(c, opts = {}) {
   </div>
   <div class="f-cols">
     <div class="f-brand">
-      <a href="/index.html" class="brand">${MARK}Virtualiamn</a>
+      <a href="/index.html" class="brand"${ED("theme|logo.text")}>${BRAND}</a>
       <p class="f-blurb"${ED("home|blurb")}>${Lo(home, "blurb")}</p>
       <address><a href="mailto:${esc(settings.email)}"${ED("settings|email")}>${esc(settings.email)}</a><a href="${telHref(settings.phone)}"${ED("settings|phone")}>${esc(settings.phone)}</a><span${ED("settings|city")}>${L(settings.city_es, settings.city_en)}</span></address>
     </div>
@@ -151,6 +185,7 @@ export function render(c, opts = {}) {
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <script type="importmap">{ "imports": { "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/+esm" } }</script>
+${THEME_HEAD}
 </head>
 <body>
 <main>
@@ -399,6 +434,10 @@ ${templates.siteJs}
           <a href="${telHref(settings.phone)}"${ED("settings|phone")}>${esc(settings.phone)}</a>
           <span data-t="city"></span>`;
     const json = v => JSON.stringify(v).replace(/</g, "\\u003c");
+    const markUse = '<svg class="ic"><use href="#i-mark"/></svg>';
+    s = s.split(`${markUse}<span>Virtualiamn</span>`).join(logoImg || `${markUse}<span>${esc(brandText)}</span>`)
+      .split(`${markUse}Virtualiamn`).join(logoImg || `${markUse}${esc(brandText)}`)
+      .replace("</head>", `${THEME_HEAD}\n</head>`);
     s = s.replace("{{heroImage}}", esc(IMG.hero))
       .replace("<!--@@STATS@@-->", stats).replace("<!--@@TESTI@@-->", testi)
       .replace("<!--@@FSVC@@-->", fsvc).replace("<!--@@ADDRESS@@-->", address)

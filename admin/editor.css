@@ -203,3 +203,10 @@ svg{display:block}
 .type-opt b{display:block;font-weight:550}
 .type-opt small{display:block;color:var(--subdued);font-size:12px}
 @media (hover:none){.lay-actions{opacity:1}}
+
+/* color field */
+.color-field{display:flex;gap:8px;align-items:center}
+.color-field input[type=color]{width:40px;height:32px;padding:0;border:0;border-radius:var(--r-sm);background:none;cursor:pointer;flex-shrink:0;box-shadow:inset 0 0 0 1px var(--border-strong)}
+.color-field input[type=color]::-webkit-color-swatch-wrapper{padding:3px}
+.color-field input[type=color]::-webkit-color-swatch{border:0;border-radius:5px}
+.color-field .input{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:lowercase}
