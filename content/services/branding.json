@@ -1,0 +1,158 @@
+{
+  "es": {
+    "title": "Branding y\ncontenido",
+    "lede": "Construimos marcas con una idea clara y una identidad visual que se reconoce en cada punto de contacto.",
+    "image": "/assets/uploads/liquid.webp",
+    "imagePosition": "50% 55%",
+    "order": 4,
+    "name": "Branding y contenido",
+    "summary": "Identidad de marca, diseño, fotografía, video y copywriting.",
+    "includes": [
+      {
+        "title": "Estrategia de marca",
+        "text": "Propósito, posicionamiento y tono de voz."
+      },
+      {
+        "title": "Identidad visual",
+        "text": "Logo, paleta de color, tipografía y sistema gráfico."
+      },
+      {
+        "title": "Manual de marca",
+        "text": "Reglas claras para que tu marca se vea igual en todas partes."
+      },
+      {
+        "title": "Fotografía y video",
+        "text": "Producción visual alineada a tu identidad."
+      },
+      {
+        "title": "Copywriting",
+        "text": "Mensajes, eslóganes y textos para web y campañas."
+      },
+      {
+        "title": "Piezas gráficas",
+        "text": "Presentaciones, papelería, empaques y más."
+      }
+    ],
+    "process": [
+      {
+        "title": "Inmersión",
+        "text": "Conocemos tu historia, tu mercado y tu competencia."
+      },
+      {
+        "title": "Estrategia",
+        "text": "Definimos qué te hace distinto y cómo lo vas a decir."
+      },
+      {
+        "title": "Diseño",
+        "text": "Exploramos rutas creativas y afinamos la elegida contigo."
+      },
+      {
+        "title": "Entrega y aplicación",
+        "text": "Entregamos archivos, manual y plantillas listas para usar."
+      }
+    ],
+    "ideal": [
+      {
+        "text": "Marcas nuevas que empiezan desde cero"
+      },
+      {
+        "text": "Empresas que necesitan un rebranding"
+      },
+      {
+        "text": "Marcas que se ven distintas en cada canal"
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Qué recibo al final?",
+        "answer": "Archivos del logo en todos los formatos, manual de marca y plantillas para tu día a día."
+      },
+      {
+        "question": "¿Cuántas propuestas de logo veré?",
+        "answer": "Lo definimos en la propuesta: presentamos rutas creativas e incluimos rondas de ajuste."
+      },
+      {
+        "question": "¿También hacen foto y video?",
+        "answer": "Sí. Producimos contenido visual alineado a tu nueva identidad."
+      }
+    ]
+  },
+  "en": {
+    "title": "Branding &\ncontent",
+    "lede": "We build brands with a clear idea and a visual identity people recognize at every touchpoint.",
+    "image": "/assets/uploads/liquid.webp",
+    "imagePosition": "50% 55%",
+    "order": 4,
+    "name": "Branding & Content",
+    "summary": "Brand identity, design, photography, video and copywriting.",
+    "includes": [
+      {
+        "title": "Brand strategy",
+        "text": "Purpose, positioning and tone of voice."
+      },
+      {
+        "title": "Visual identity",
+        "text": "Logo, color palette, typography and graphic system."
+      },
+      {
+        "title": "Brand guidelines",
+        "text": "Clear rules so your brand looks consistent everywhere."
+      },
+      {
+        "title": "Photo & video",
+        "text": "Visual production aligned with your identity."
+      },
+      {
+        "title": "Copywriting",
+        "text": "Messaging, taglines and copy for web and campaigns."
+      },
+      {
+        "title": "Brand collateral",
+        "text": "Decks, stationery, packaging and more."
+      }
+    ],
+    "process": [
+      {
+        "title": "Immersion",
+        "text": "We learn your story, market and competition."
+      },
+      {
+        "title": "Strategy",
+        "text": "We define what sets you apart and how you'll say it."
+      },
+      {
+        "title": "Design",
+        "text": "We explore creative routes and refine the chosen one with you."
+      },
+      {
+        "title": "Delivery & rollout",
+        "text": "We deliver files, guidelines and ready-to-use templates."
+      }
+    ],
+    "ideal": [
+      {
+        "text": "New brands starting from scratch"
+      },
+      {
+        "text": "Companies that need a rebrand"
+      },
+      {
+        "text": "Brands that look different on every channel"
+      }
+    ],
+    "faq": [
+      {
+        "question": "What do I get at the end?",
+        "answer": "Logo files in every format, brand guidelines and templates for day-to-day use."
+      },
+      {
+        "question": "How many logo options will I see?",
+        "answer": "We set it in the proposal: we present creative routes and include rounds of revisions."
+      },
+      {
+        "question": "Do you also do photo and video?",
+        "answer": "Yes. We produce visual content aligned with your new identity."
+      }
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "es": {
+    "title": "Casos de\néxito",
+    "lede": "Proyectos donde la estrategia se convirtió en resultados medibles.",
+    "image": "/assets/uploads/liquid.webp",
+    "imagePosition": "50% 50%",
+    "cases": [
+      {
+        "category": "Redes sociales",
+        "client": "[Nombre del cliente]",
+        "challenge": "[Qué problema tenía el cliente.]",
+        "solution": "[Qué hicimos.]",
+        "result": "[Resultado medible, con números reales.]",
+        "image": "/assets/uploads/swirl.webp"
+      },
+      {
+        "category": "Publicidad pagada",
+        "client": "[Nombre del cliente]",
+        "challenge": "[Qué problema tenía el cliente.]",
+        "solution": "[Qué hicimos.]",
+        "result": "[Resultado medible, con números reales.]",
+        "image": "/assets/uploads/ice.webp"
+      },
+      {
+        "category": "Branding y web",
+        "client": "[Nombre del cliente]",
+        "challenge": "[Qué problema tenía el cliente.]",
+        "solution": "[Qué hicimos.]",
+        "result": "[Resultado medible, con números reales.]",
+        "image": "/assets/uploads/brush.webp"
+      }
+    ]
+  },
+  "en": {
+    "title": "Case\nstudies",
+    "lede": "Projects where strategy turned into measurable results.",
+    "image": "/assets/uploads/liquid.webp",
+    "imagePosition": "50% 50%",
+    "cases": [
+      {
+        "category": "Social media",
+        "client": "[Client name]",
+        "challenge": "[What problem the client had.]",
+        "solution": "[What we did.]",
+        "result": "[Measurable result, with real numbers.]",
+        "image": "/assets/uploads/swirl.webp"
+      },
+      {
+        "category": "Paid advertising",
+        "client": "[Client name]",
+        "challenge": "[What problem the client had.]",
+        "solution": "[What we did.]",
+        "result": "[Measurable result, with real numbers.]",
+        "image": "/assets/uploads/ice.webp"
+      },
+      {
+        "category": "Branding & web",
+        "client": "[Client name]",
+        "challenge": "[What problem the client had.]",
+        "solution": "[What we did.]",
+        "result": "[Measurable result, with real numbers.]",
+        "image": "/assets/uploads/brush.webp"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "es": {
+    "title": "Sobre\nnosotros",
+    "lede": "Somos Virtualiamn, una agencia de marketing digital que combina estrategia, creatividad y datos para hacer crecer marcas.",
+    "image": "/assets/uploads/brush.webp",
+    "imagePosition": "50% 45%",
+    "mission": "Ayudar a las marcas a crecer en digital con estrategias claras, contenido que conecta y decisiones basadas en datos.",
+    "values": [
+      {
+        "title": "Estrategia antes que ruido",
+        "text": "Cada pieza tiene un objetivo; no publicamos por publicar."
+      },
+      {
+        "title": "Creatividad con propósito",
+        "text": "Ideas que se recuerdan y que mueven a la acción."
+      },
+      {
+        "title": "Datos que deciden",
+        "text": "Medimos, aprendemos y ajustamos de forma constante."
+      },
+      {
+        "title": "Cercanía",
+        "text": "Trabajamos de cerca con tu equipo, con comunicación clara."
+      }
+    ],
+    "steps": [
+      {
+        "title": "Escuchamos",
+        "text": "Entendemos tu negocio, tus clientes y tus metas."
+      },
+      {
+        "title": "Planeamos",
+        "text": "Diseñamos una estrategia con prioridades claras."
+      },
+      {
+        "title": "Creamos",
+        "text": "Producimos contenido, campañas y sitios."
+      },
+      {
+        "title": "Medimos",
+        "text": "Reportamos resultados y mejoramos mes a mes."
+      }
+    ],
+    "team": []
+  },
+  "en": {
+    "title": "About\nus",
+    "lede": "We're Virtualiamn, a digital marketing agency combining strategy, creativity and data to grow brands.",
+    "image": "/assets/uploads/brush.webp",
+    "imagePosition": "50% 45%",
+    "mission": "Helping brands grow online with clear strategies, content that connects and decisions grounded in data.",
+    "values": [
+      {
+        "title": "Strategy over noise",
+        "text": "Every piece has a purpose; we don't post for the sake of posting."
+      },
+      {
+        "title": "Creativity with purpose",
+        "text": "Ideas that stick and move people to act."
+      },
+      {
+        "title": "Data-led decisions",
+        "text": "We measure, learn and adjust constantly."
+      },
+      {
+        "title": "Partnership",
+        "text": "We work closely with your team and communicate clearly."
+      }
+    ],
+    "steps": [
+      {
+        "title": "We listen",
+        "text": "We understand your business, customers and goals."
+      },
+      {
+        "title": "We plan",
+        "text": "We design a strategy with clear priorities."
+      },
+      {
+        "title": "We create",
+        "text": "We produce content, campaigns and websites."
+      },
+      {
+        "title": "We measure",
+        "text": "We report results and improve month after month."
+      }
+    ],
+    "team": []
+  }
+}

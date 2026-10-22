@@ -1,0 +1,92 @@
+{
+  "es": {
+    "title": "Trabaja con\nnosotros",
+    "lede": "Buscamos personas curiosas que disfruten crear, medir y mejorar.",
+    "image": "/assets/uploads/waves.webp",
+    "imagePosition": "30% 60%",
+    "areas": [
+      {
+        "text": "Estrategia digital"
+      },
+      {
+        "text": "Diseño gráfico y motion"
+      },
+      {
+        "text": "Creación de contenido"
+      },
+      {
+        "text": "Publicidad pagada"
+      },
+      {
+        "text": "Desarrollo web"
+      },
+      {
+        "text": "Gestión de cuentas"
+      }
+    ],
+    "values": [
+      {
+        "title": "Curiosidad",
+        "text": "Te gusta probar, aprender y compartir lo que descubres."
+      },
+      {
+        "title": "Criterio",
+        "text": "Sabes por qué haces lo que haces."
+      },
+      {
+        "title": "Colaboración",
+        "text": "Trabajas bien con otros y das y recibes feedback."
+      },
+      {
+        "title": "Constancia",
+        "text": "Cumples lo que prometes, a tiempo."
+      }
+    ],
+    "openings": "Por ahora no tenemos vacantes publicadas. Envía tu CV y portafolio a [empleos@virtualiamn.com] y te tendremos en cuenta."
+  },
+  "en": {
+    "title": "Work\nwith us",
+    "lede": "We're looking for curious people who enjoy creating, measuring and improving.",
+    "image": "/assets/uploads/waves.webp",
+    "imagePosition": "30% 60%",
+    "areas": [
+      {
+        "text": "Digital strategy"
+      },
+      {
+        "text": "Graphic & motion design"
+      },
+      {
+        "text": "Content creation"
+      },
+      {
+        "text": "Paid advertising"
+      },
+      {
+        "text": "Web development"
+      },
+      {
+        "text": "Account management"
+      }
+    ],
+    "values": [
+      {
+        "title": "Curiosity",
+        "text": "You like to test, learn and share what you find."
+      },
+      {
+        "title": "Judgment",
+        "text": "You know why you do what you do."
+      },
+      {
+        "title": "Collaboration",
+        "text": "You work well with others and give and take feedback."
+      },
+      {
+        "title": "Consistency",
+        "text": "You deliver what you promise, on time."
+      }
+    ],
+    "openings": "We don't have open roles listed right now. Send your résumé and portfolio to [careers@virtualiamn.com] and we'll keep you in mind."
+  }
+}

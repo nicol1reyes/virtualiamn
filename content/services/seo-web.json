@@ -1,0 +1,158 @@
+{
+  "es": {
+    "title": "SEO y\nsitios web",
+    "lede": "Sitios rápidos, claros y fáciles de encontrar en Google, diseñados para convertir visitas en clientes.",
+    "image": "/assets/uploads/waves.webp",
+    "imagePosition": "50% 50%",
+    "order": 3,
+    "name": "SEO y sitios web",
+    "summary": "Sitios rápidos y posicionamiento para que tus clientes te encuentren en Google.",
+    "includes": [
+      {
+        "title": "Diseño y desarrollo web",
+        "text": "Sitios a la medida, rápidos y adaptados a celular."
+      },
+      {
+        "title": "Landing pages",
+        "text": "Páginas enfocadas en una acción para tus campañas."
+      },
+      {
+        "title": "SEO técnico",
+        "text": "Velocidad, indexación y estructura para que Google te entienda."
+      },
+      {
+        "title": "SEO de contenido",
+        "text": "Palabras clave y artículos que responden lo que busca tu cliente."
+      },
+      {
+        "title": "SEO local",
+        "text": "Perfil de empresa en Google optimizado para aparecer en tu zona."
+      },
+      {
+        "title": "Analítica",
+        "text": "GA4 y Search Console configurados para medir lo importante."
+      }
+    ],
+    "process": [
+      {
+        "title": "Descubrimiento",
+        "text": "Entendemos tu negocio, tus clientes y tus objetivos."
+      },
+      {
+        "title": "Arquitectura y diseño",
+        "text": "Definimos la estructura y diseñamos cada página."
+      },
+      {
+        "title": "Desarrollo y contenido",
+        "text": "Construimos el sitio y preparamos textos optimizados."
+      },
+      {
+        "title": "Lanzamiento y posicionamiento",
+        "text": "Publicamos, medimos y seguimos mejorando el SEO."
+      }
+    ],
+    "ideal": [
+      {
+        "text": "Negocios sin sitio o con un sitio desactualizado"
+      },
+      {
+        "text": "Marcas que quieren aparecer en Google"
+      },
+      {
+        "text": "Campañas que necesitan landing pages"
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Cuánto tarda un sitio web?",
+        "answer": "Depende del alcance. En la propuesta te damos un calendario claro por etapas."
+      },
+      {
+        "question": "¿En cuánto tiempo funciona el SEO?",
+        "answer": "El SEO es acumulativo: las mejoras suelen notarse en meses, no en días."
+      },
+      {
+        "question": "¿Podré editar mi sitio?",
+        "answer": "Sí. Entregamos con un gestor de contenido y una capacitación para tu equipo."
+      }
+    ]
+  },
+  "en": {
+    "title": "SEO &\nwebsites",
+    "lede": "Fast, clear websites that are easy to find on Google and designed to turn visits into customers.",
+    "image": "/assets/uploads/waves.webp",
+    "imagePosition": "50% 50%",
+    "order": 3,
+    "name": "SEO & Websites",
+    "summary": "Fast websites and search optimization so customers find you on Google.",
+    "includes": [
+      {
+        "title": "Web design & build",
+        "text": "Custom, fast, mobile-first websites."
+      },
+      {
+        "title": "Landing pages",
+        "text": "Single-purpose pages built for your campaigns."
+      },
+      {
+        "title": "Technical SEO",
+        "text": "Speed, indexing and structure so Google understands you."
+      },
+      {
+        "title": "Content SEO",
+        "text": "Keywords and articles that answer what your customers search for."
+      },
+      {
+        "title": "Local SEO",
+        "text": "An optimized Google Business Profile to show up in your area."
+      },
+      {
+        "title": "Analytics",
+        "text": "GA4 and Search Console set up to track what matters."
+      }
+    ],
+    "process": [
+      {
+        "title": "Discovery",
+        "text": "We learn your business, your customers and your goals."
+      },
+      {
+        "title": "Architecture & design",
+        "text": "We map the structure and design every page."
+      },
+      {
+        "title": "Build & content",
+        "text": "We build the site and prepare optimized copy."
+      },
+      {
+        "title": "Launch & ranking",
+        "text": "We launch, measure and keep improving SEO."
+      }
+    ],
+    "ideal": [
+      {
+        "text": "Businesses with no site or an outdated one"
+      },
+      {
+        "text": "Brands that want to show up on Google"
+      },
+      {
+        "text": "Campaigns that need landing pages"
+      }
+    ],
+    "faq": [
+      {
+        "question": "How long does a website take?",
+        "answer": "It depends on scope. Your proposal includes a clear, stage-by-stage timeline."
+      },
+      {
+        "question": "How long does SEO take?",
+        "answer": "SEO compounds: improvements usually show over months, not days."
+      },
+      {
+        "question": "Can I edit my site?",
+        "answer": "Yes. We hand over a content manager and train your team."
+      }
+    ]
+  }
+}

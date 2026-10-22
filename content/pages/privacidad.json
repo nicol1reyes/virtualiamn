@@ -1,0 +1,82 @@
+{
+  "es": {
+    "title": "Política de\nprivacidad",
+    "lede": "Cómo recopilamos, usamos y protegemos tu información.",
+    "image": "/assets/uploads/ice.webp",
+    "imagePosition": "50% 60%",
+    "sections": [
+      {
+        "title": "1. Quiénes somos",
+        "text": "[Razón social] (“Virtualiamn”), con domicilio en [dirección], es responsable del tratamiento de tus datos. Contacto: [correo]."
+      },
+      {
+        "title": "2. Información que recopilamos",
+        "text": "Los datos que nos envías en el formulario (nombre, correo y mensaje) y datos técnicos básicos de navegación, como tipo de navegador y, si se usan, cookies de analítica."
+      },
+      {
+        "title": "3. Cómo la usamos",
+        "text": "Para responder tus solicitudes, prestar nuestros servicios y mejorar el sitio."
+      },
+      {
+        "title": "4. Con quién la compartimos",
+        "text": "Solo con proveedores que nos ayudan a operar (por ejemplo, alojamiento o correo). No vendemos tus datos."
+      },
+      {
+        "title": "5. Conservación",
+        "text": "Conservamos tus datos solo el tiempo necesario para los fines descritos o el que exija la ley."
+      },
+      {
+        "title": "6. Tus derechos",
+        "text": "Puedes pedir acceso, corrección o eliminación de tus datos escribiendo a [correo]."
+      },
+      {
+        "title": "7. Cookies",
+        "text": "[Describe aquí las cookies o herramientas de analítica que uses, o indica que no se usan.]"
+      },
+      {
+        "title": "8. Cambios",
+        "text": "Podemos actualizar esta política; publicaremos aquí la versión vigente. Última actualización: [fecha]."
+      }
+    ]
+  },
+  "en": {
+    "title": "Privacy\npolicy",
+    "lede": "How we collect, use and protect your information.",
+    "image": "/assets/uploads/ice.webp",
+    "imagePosition": "50% 60%",
+    "sections": [
+      {
+        "title": "1. Who we are",
+        "text": "[Legal entity name] (“Virtualiamn”), located at [address], is responsible for processing your data. Contact: [email]."
+      },
+      {
+        "title": "2. Information we collect",
+        "text": "The data you send through our form (name, email and message) and basic technical browsing data such as browser type and, if used, analytics cookies."
+      },
+      {
+        "title": "3. How we use it",
+        "text": "To respond to your requests, provide our services and improve the site."
+      },
+      {
+        "title": "4. Who we share it with",
+        "text": "Only with providers that help us operate (for example, hosting or email). We don't sell your data."
+      },
+      {
+        "title": "5. Retention",
+        "text": "We keep your data only as long as needed for these purposes or as required by law."
+      },
+      {
+        "title": "6. Your rights",
+        "text": "You can request access, correction or deletion of your data by writing to [email]."
+      },
+      {
+        "title": "7. Cookies",
+        "text": "[Describe the cookies or analytics tools you use here, or state that none are used.]"
+      },
+      {
+        "title": "8. Changes",
+        "text": "We may update this policy and will post the current version here. Last updated: [date]."
+      }
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "es": {
+    "title": "Términos y\ncondiciones",
+    "lede": "Las reglas para usar este sitio.",
+    "image": "/assets/uploads/brush.webp",
+    "imagePosition": "50% 50%",
+    "sections": [
+      {
+        "title": "1. Aceptación",
+        "text": "Al usar este sitio aceptas estos términos. Si no estás de acuerdo, por favor no lo uses."
+      },
+      {
+        "title": "2. Uso del sitio",
+        "text": "Te comprometes a usar el sitio de forma lícita y a no intentar dañarlo ni acceder sin autorización."
+      },
+      {
+        "title": "3. Propiedad intelectual",
+        "text": "Los textos, diseños, logos e imágenes de este sitio pertenecen a Virtualiamn o a sus autores y no pueden usarse sin permiso."
+      },
+      {
+        "title": "4. Servicios",
+        "text": "Cada servicio se rige por su propuesta o contrato específico, que prevalece sobre estos términos."
+      },
+      {
+        "title": "5. Enlaces a terceros",
+        "text": "No somos responsables del contenido de sitios externos enlazados desde aquí."
+      },
+      {
+        "title": "6. Limitación de responsabilidad",
+        "text": "El sitio se ofrece “tal cual”. En la medida que permita la ley, no respondemos por daños derivados de su uso."
+      },
+      {
+        "title": "7. Ley aplicable",
+        "text": "Estos términos se rigen por las leyes de [jurisdicción]."
+      },
+      {
+        "title": "8. Contacto",
+        "text": "Para cualquier duda escríbenos a [correo]. Última actualización: [fecha]."
+      }
+    ]
+  },
+  "en": {
+    "title": "Terms &\nconditions",
+    "lede": "The rules for using this site.",
+    "image": "/assets/uploads/brush.webp",
+    "imagePosition": "50% 50%",
+    "sections": [
+      {
+        "title": "1. Acceptance",
+        "text": "By using this site you accept these terms. If you don't agree, please don't use it."
+      },
+      {
+        "title": "2. Use of the site",
+        "text": "You agree to use the site lawfully and not to harm it or access it without authorization."
+      },
+      {
+        "title": "3. Intellectual property",
+        "text": "The text, designs, logos and images on this site belong to Virtualiamn or their authors and may not be used without permission."
+      },
+      {
+        "title": "4. Services",
+        "text": "Each service is governed by its own proposal or contract, which prevails over these terms."
+      },
+      {
+        "title": "5. Third-party links",
+        "text": "We're not responsible for the content of external sites linked from here."
+      },
+      {
+        "title": "6. Limitation of liability",
+        "text": "The site is provided “as is”. To the extent permitted by law, we're not liable for damages arising from its use."
+      },
+      {
+        "title": "7. Governing law",
+        "text": "These terms are governed by the laws of [jurisdiction]."
+      },
+      {
+        "title": "8. Contact",
+        "text": "For any questions, write to [email]. Last updated: [date]."
+      }
+    ]
+  }
+}

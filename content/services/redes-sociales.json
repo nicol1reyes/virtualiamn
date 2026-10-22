@@ -1,0 +1,158 @@
+{
+  "es": {
+    "title": "Redes\nsociales",
+    "lede": "Estrategia, contenido y comunidad para que tu marca se vea, se recuerde y venda en Instagram, TikTok, Facebook y LinkedIn.",
+    "image": "/assets/uploads/swirl.webp",
+    "imagePosition": "50% 40%",
+    "order": 1,
+    "name": "Redes sociales",
+    "summary": "Estrategia, contenido y gestión de comunidad en Instagram, TikTok, Facebook y LinkedIn.",
+    "includes": [
+      {
+        "title": "Estrategia y calendario",
+        "text": "Pilares de contenido, tono de voz y un calendario editorial claro cada mes."
+      },
+      {
+        "title": "Diseño y producción",
+        "text": "Posts, carruseles, historias y reels hechos para cada plataforma."
+      },
+      {
+        "title": "Copywriting",
+        "text": "Textos que suenan a tu marca y llevan a la acción."
+      },
+      {
+        "title": "Gestión de comunidad",
+        "text": "Respondemos comentarios y mensajes para que nadie se quede sin respuesta."
+      },
+      {
+        "title": "Creadores y colaboraciones",
+        "text": "Buscamos y coordinamos colaboraciones con creadores afines a tu marca."
+      },
+      {
+        "title": "Reportes mensuales",
+        "text": "Alcance, interacción y aprendizajes, explicados en simple."
+      }
+    ],
+    "process": [
+      {
+        "title": "Diagnóstico",
+        "text": "Revisamos tus cuentas, tu audiencia y a tu competencia."
+      },
+      {
+        "title": "Estrategia",
+        "text": "Definimos pilares, tono, frecuencia y calendario."
+      },
+      {
+        "title": "Producción",
+        "text": "Creamos y programamos el contenido; tú lo apruebas antes de publicarse."
+      },
+      {
+        "title": "Medición",
+        "text": "Reporte mensual y ajustes según lo que funciona."
+      }
+    ],
+    "ideal": [
+      {
+        "text": "Marcas que publican sin un plan claro"
+      },
+      {
+        "text": "Negocios que quieren delegar sus redes"
+      },
+      {
+        "text": "Lanzamientos de productos o servicios"
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Qué redes manejan?",
+        "answer": "Instagram, TikTok, Facebook y LinkedIn. Si tu audiencia está en otra plataforma, lo evaluamos contigo."
+      },
+      {
+        "question": "¿Yo apruebo el contenido?",
+        "answer": "Sí. Ves el calendario y cada pieza antes de que se publique."
+      },
+      {
+        "question": "¿Cuándo veré resultados?",
+        "answer": "Las primeras señales de alcance e interacción suelen notarse en semanas; el crecimiento sostenido llega con meses de constancia."
+      }
+    ]
+  },
+  "en": {
+    "title": "Social\nmedia",
+    "lede": "Strategy, content and community so your brand gets seen, remembered and chosen on Instagram, TikTok, Facebook and LinkedIn.",
+    "image": "/assets/uploads/swirl.webp",
+    "imagePosition": "50% 40%",
+    "order": 1,
+    "name": "Social Media",
+    "summary": "Strategy, content and community management across Instagram, TikTok, Facebook and LinkedIn.",
+    "includes": [
+      {
+        "title": "Strategy & calendar",
+        "text": "Content pillars, tone of voice and a clear editorial calendar every month."
+      },
+      {
+        "title": "Design & production",
+        "text": "Posts, carousels, stories and reels made for each platform."
+      },
+      {
+        "title": "Copywriting",
+        "text": "Captions that sound like your brand and drive action."
+      },
+      {
+        "title": "Community management",
+        "text": "We answer comments and messages so no one is left waiting."
+      },
+      {
+        "title": "Creators & collabs",
+        "text": "We find and coordinate partnerships with creators who fit your brand."
+      },
+      {
+        "title": "Monthly reports",
+        "text": "Reach, engagement and learnings, explained simply."
+      }
+    ],
+    "process": [
+      {
+        "title": "Audit",
+        "text": "We review your accounts, your audience and your competitors."
+      },
+      {
+        "title": "Strategy",
+        "text": "We define pillars, tone, cadence and calendar."
+      },
+      {
+        "title": "Production",
+        "text": "We create and schedule content; you approve it before it goes live."
+      },
+      {
+        "title": "Measurement",
+        "text": "Monthly reporting and adjustments based on what works."
+      }
+    ],
+    "ideal": [
+      {
+        "text": "Brands posting without a clear plan"
+      },
+      {
+        "text": "Businesses ready to hand off their social"
+      },
+      {
+        "text": "Product or service launches"
+      }
+    ],
+    "faq": [
+      {
+        "question": "Which platforms do you manage?",
+        "answer": "Instagram, TikTok, Facebook and LinkedIn. If your audience lives elsewhere, we'll assess it with you."
+      },
+      {
+        "question": "Do I approve the content?",
+        "answer": "Yes. You see the calendar and every piece before it's published."
+      },
+      {
+        "question": "When will I see results?",
+        "answer": "Early signs in reach and engagement usually show within weeks; sustained growth comes with months of consistency."
+      }
+    ]
+  }
+}

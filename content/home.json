@@ -1,0 +1,244 @@
+{
+  "es": {
+    "heroImage": "/assets/uploads/hero.webp",
+    "heroTitle": "Domina El Feed",
+    "tagline": "Más alcance,\nmás ventas",
+    "memberValue": "120+",
+    "memberCap": "Marcas que confían en nosotros",
+    "memberImage": "/assets/uploads/brush.webp",
+    "coll": [
+      {
+        "brand": "Virtualiamn Social",
+        "title": "Contenido que conecta",
+        "cta": "Ver servicio",
+        "link": "redes-sociales",
+        "image": "/assets/uploads/waves.webp"
+      },
+      {
+        "brand": "Virtualiamn Ads",
+        "title": "Campañas que venden",
+        "cta": "Ver resultados",
+        "link": "publicidad",
+        "image": "/assets/uploads/ice.webp"
+      },
+      {
+        "brand": "Virtualiamn Web",
+        "title": "Sitios que posicionan",
+        "cta": "Ver proyectos",
+        "link": "seo-web",
+        "image": "/assets/uploads/liquid.webp"
+      }
+    ],
+    "pctValue": "100%",
+    "pctCap": "Estrategia hecha a la medida de tu marca",
+    "badgeTitle": "La agencia de las marcas que quieren crecer",
+    "badgeBody": "Desde emprendedores que empiezan hasta empresas establecidas, nuestros clientes trabajan con nosotros porque los resultados se ven en sus números.",
+    "trust": [
+      {
+        "word1": "Marketing",
+        "word2": "Digital",
+        "word3": "Con",
+        "word4": "Resultados",
+        "name": "Estrategia digital",
+        "role": "Planificación y análisis de datos",
+        "image": "/assets/uploads/ice.webp"
+      },
+      {
+        "word1": "Más",
+        "word2": "Alcance",
+        "word3": "Más",
+        "word4": "Clientes",
+        "name": "Publicidad pagada",
+        "role": "Meta, Google y TikTok Ads",
+        "image": "/assets/uploads/waves.webp"
+      },
+      {
+        "word1": "Marcas",
+        "word2": "Que",
+        "word3": "Crecen",
+        "word4": "Aquí",
+        "name": "Branding y contenido",
+        "role": "Identidad, diseño y video",
+        "image": "/assets/uploads/liquid.webp"
+      }
+    ],
+    "svcEyebrow": "Nuestros servicios",
+    "svcTitle": "Hecho para\ncada etapa",
+    "facIcon": "/assets/uploads/swirl.webp",
+    "facTitle": "Conoce Nuestro\nEstudio\nCreativo",
+    "facBody": "Un equipo de estrategas, diseñadores y creadores de contenido que trabaja de cerca contigo, del brief a la publicación.",
+    "tile1": {
+      "name": "Sala de estrategia",
+      "desc": "Donde convertimos datos en decisiones y campañas.",
+      "image": "/assets/uploads/brush.webp"
+    },
+    "tile2": {
+      "name": "Laboratorio de contenido",
+      "desc": "Donde planeamos, producimos y editamos cada pieza.",
+      "image": "/assets/uploads/waves.webp"
+    },
+    "statsEyebrow": "En números",
+    "statsTitle": "Una agencia que\nlo mide todo",
+    "stats": [
+      {
+        "value": "120+",
+        "label": "Marcas atendidas"
+      },
+      {
+        "value": "8",
+        "label": "Años de experiencia"
+      },
+      {
+        "value": "3.5x",
+        "label": "Retorno promedio en ads"
+      },
+      {
+        "value": "2M+",
+        "label": "Personas alcanzadas al mes"
+      }
+    ],
+    "testiEyebrow": "Lo que dicen nuestros clientes",
+    "testiTitle": "Marcas que\ncrecen con nosotros",
+    "testimonials": [
+      {
+        "quote": "[Testimonio real de un cliente de redes sociales.]",
+        "name": "[Nombre del cliente]",
+        "role": "[Empresa] · Redes sociales"
+      },
+      {
+        "quote": "[Testimonio real de un cliente de publicidad pagada.]",
+        "name": "[Nombre del cliente]",
+        "role": "[Empresa] · Publicidad pagada"
+      },
+      {
+        "quote": "[Testimonio real de un cliente de branding o web.]",
+        "name": "[Nombre del cliente]",
+        "role": "[Empresa] · Branding y web"
+      }
+    ],
+    "ctaEyebrow": "Empecemos",
+    "ctaBig": "¿Listos para\ncrecer?",
+    "blurb": "Agencia de marketing digital que combina estrategia, creatividad y datos para hacer crecer tu marca."
+  },
+  "en": {
+    "heroImage": "/assets/uploads/hero.webp",
+    "heroTitle": "Own The Feed",
+    "tagline": "Show Up,\nSell More",
+    "memberValue": "120+",
+    "memberCap": "Brands that trust us",
+    "memberImage": "/assets/uploads/brush.webp",
+    "coll": [
+      {
+        "brand": "Virtualiamn Social",
+        "title": "Content that connects",
+        "cta": "See the service",
+        "link": "redes-sociales",
+        "image": "/assets/uploads/waves.webp"
+      },
+      {
+        "brand": "Virtualiamn Ads",
+        "title": "Campaigns that sell",
+        "cta": "See results",
+        "link": "publicidad",
+        "image": "/assets/uploads/ice.webp"
+      },
+      {
+        "brand": "Virtualiamn Web",
+        "title": "Sites that rank",
+        "cta": "View projects",
+        "link": "seo-web",
+        "image": "/assets/uploads/liquid.webp"
+      }
+    ],
+    "pctValue": "100%",
+    "pctCap": "Strategy built around your brand",
+    "badgeTitle": "Trusted by brands that want to grow",
+    "badgeBody": "From first-time founders to established companies, clients work with us because the results show up in their numbers.",
+    "trust": [
+      {
+        "word1": "Data-",
+        "word2": "Driven",
+        "word3": "Digital",
+        "word4": "Marketing",
+        "name": "Digital strategy",
+        "role": "Planning & analytics",
+        "image": "/assets/uploads/ice.webp"
+      },
+      {
+        "word1": "Bigger",
+        "word2": "Reach",
+        "word3": "Better",
+        "word4": "Leads",
+        "name": "Paid advertising",
+        "role": "Meta, Google & TikTok Ads",
+        "image": "/assets/uploads/waves.webp"
+      },
+      {
+        "word1": "Brands",
+        "word2": "That",
+        "word3": "Grow",
+        "word4": "Here",
+        "name": "Branding & content",
+        "role": "Identity, design & video",
+        "image": "/assets/uploads/liquid.webp"
+      }
+    ],
+    "svcEyebrow": "Our services",
+    "svcTitle": "Built for\nevery stage",
+    "facIcon": "/assets/uploads/swirl.webp",
+    "facTitle": "Tour Our\nCreative\nStudio",
+    "facBody": "A team of strategists, designers and content creators working closely with you — from brief to launch.",
+    "tile1": {
+      "name": "Strategy Room",
+      "desc": "Where we turn data into decisions and campaigns.",
+      "image": "/assets/uploads/brush.webp"
+    },
+    "tile2": {
+      "name": "Content Lab",
+      "desc": "Where we plan, produce and edit every piece.",
+      "image": "/assets/uploads/waves.webp"
+    },
+    "statsEyebrow": "By the numbers",
+    "statsTitle": "An agency that\nkeeps score",
+    "stats": [
+      {
+        "value": "120+",
+        "label": "Brands served"
+      },
+      {
+        "value": "8",
+        "label": "Years of experience"
+      },
+      {
+        "value": "3.5x",
+        "label": "Average return on ad spend"
+      },
+      {
+        "value": "2M+",
+        "label": "People reached monthly"
+      }
+    ],
+    "testiEyebrow": "What clients say",
+    "testiTitle": "Brands that\ngrow with us",
+    "testimonials": [
+      {
+        "quote": "[A real testimonial from a social media client.]",
+        "name": "[Client name]",
+        "role": "[Company] · Social media"
+      },
+      {
+        "quote": "[A real testimonial from a paid ads client.]",
+        "name": "[Client name]",
+        "role": "[Company] · Paid advertising"
+      },
+      {
+        "quote": "[A real testimonial from a branding or web client.]",
+        "name": "[Client name]",
+        "role": "[Company] · Branding & web"
+      }
+    ],
+    "ctaEyebrow": "Get started",
+    "ctaBig": "Ready to\ngrow?",
+    "blurb": "A digital marketing agency combining strategy, creativity and data to grow your brand."
+  }
+}

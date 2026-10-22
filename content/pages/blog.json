@@ -1,0 +1,14 @@
+{
+  "es": {
+    "title": "Ideas\nque crecen",
+    "lede": "Consejos prácticos de marketing digital para hacer crecer tu marca.",
+    "image": "/assets/uploads/swirl.webp",
+    "imagePosition": "50% 20%"
+  },
+  "en": {
+    "title": "Ideas\nthat grow",
+    "lede": "Practical digital marketing tips to grow your brand.",
+    "image": "/assets/uploads/swirl.webp",
+    "imagePosition": "50% 20%"
+  }
+}

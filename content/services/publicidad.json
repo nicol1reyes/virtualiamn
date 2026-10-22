@@ -1,0 +1,158 @@
+{
+  "es": {
+    "title": "Publicidad\npagada",
+    "lede": "Campañas en Meta, Google y TikTok Ads pensadas para vender: medimos cada peso invertido y lo optimizamos.",
+    "image": "/assets/uploads/ice.webp",
+    "imagePosition": "50% 40%",
+    "order": 2,
+    "name": "Publicidad pagada",
+    "summary": "Campañas en Meta, Google y TikTok Ads optimizadas para generar ventas.",
+    "includes": [
+      {
+        "title": "Estrategia y embudo",
+        "text": "Objetivos, audiencias y mensajes para cada etapa de compra."
+      },
+      {
+        "title": "Meta Ads",
+        "text": "Campañas en Facebook e Instagram, de alcance a conversión."
+      },
+      {
+        "title": "Google Ads",
+        "text": "Búsqueda, display y YouTube para aparecer cuando te buscan."
+      },
+      {
+        "title": "TikTok Ads",
+        "text": "Anuncios nativos para llegar a nuevas audiencias."
+      },
+      {
+        "title": "Creatividades y pruebas A/B",
+        "text": "Probamos mensajes y formatos para quedarnos con lo que convierte."
+      },
+      {
+        "title": "Medición y reportes",
+        "text": "Píxeles, eventos y conversiones configurados para decidir con datos."
+      }
+    ],
+    "process": [
+      {
+        "title": "Auditoría y objetivos",
+        "text": "Revisamos tus cuentas y definimos metas medibles."
+      },
+      {
+        "title": "Configuración",
+        "text": "Instalamos la medición: píxel, eventos y conversiones."
+      },
+      {
+        "title": "Lanzamiento y pruebas",
+        "text": "Salimos con varias variantes para aprender rápido."
+      },
+      {
+        "title": "Optimización",
+        "text": "Ajustamos presupuesto, audiencias y anuncios de forma continua."
+      }
+    ],
+    "ideal": [
+      {
+        "text": "Tiendas en línea que quieren más ventas"
+      },
+      {
+        "text": "Servicios que necesitan prospectos"
+      },
+      {
+        "text": "Marcas que ya invierten y buscan mejor retorno"
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Cuánto debo invertir en anuncios?",
+        "answer": "Depende de tu objetivo y mercado. Empezamos con un presupuesto de prueba y escalamos con base en los datos."
+      },
+      {
+        "question": "¿La inversión en anuncios incluye su servicio?",
+        "answer": "No. La inversión publicitaria se paga directamente a cada plataforma; nuestra gestión se cobra aparte."
+      },
+      {
+        "question": "¿Las cuentas publicitarias son mías?",
+        "answer": "Sí. Trabajamos siempre dentro de tus cuentas, así que todo queda a tu nombre."
+      }
+    ]
+  },
+  "en": {
+    "title": "Paid\nadvertising",
+    "lede": "Meta, Google and TikTok Ads campaigns built to sell: we track every dollar spent and keep optimizing it.",
+    "image": "/assets/uploads/ice.webp",
+    "imagePosition": "50% 40%",
+    "order": 2,
+    "name": "Paid Advertising",
+    "summary": "Meta, Google and TikTok Ads campaigns optimized to drive sales.",
+    "includes": [
+      {
+        "title": "Strategy & funnel",
+        "text": "Goals, audiences and messages for every stage of the buying journey."
+      },
+      {
+        "title": "Meta Ads",
+        "text": "Facebook and Instagram campaigns, from awareness to conversion."
+      },
+      {
+        "title": "Google Ads",
+        "text": "Search, display and YouTube to show up when people are looking."
+      },
+      {
+        "title": "TikTok Ads",
+        "text": "Native ads to reach new audiences."
+      },
+      {
+        "title": "Creative & A/B testing",
+        "text": "We test messages and formats to keep what converts."
+      },
+      {
+        "title": "Tracking & reporting",
+        "text": "Pixels, events and conversions set up so decisions are data-led."
+      }
+    ],
+    "process": [
+      {
+        "title": "Audit & goals",
+        "text": "We review your accounts and set measurable goals."
+      },
+      {
+        "title": "Setup",
+        "text": "We install tracking: pixel, events and conversions."
+      },
+      {
+        "title": "Launch & testing",
+        "text": "We launch with several variants to learn fast."
+      },
+      {
+        "title": "Optimization",
+        "text": "We keep tuning budget, audiences and ads."
+      }
+    ],
+    "ideal": [
+      {
+        "text": "Online stores that want more sales"
+      },
+      {
+        "text": "Service businesses that need leads"
+      },
+      {
+        "text": "Brands already spending that want better returns"
+      }
+    ],
+    "faq": [
+      {
+        "question": "How much should I spend on ads?",
+        "answer": "It depends on your goal and market. We start with a test budget and scale based on the data."
+      },
+      {
+        "question": "Does ad spend include your fee?",
+        "answer": "No. Ad spend is paid directly to each platform; our management fee is separate."
+      },
+      {
+        "question": "Do I own the ad accounts?",
+        "answer": "Yes. We always work inside your accounts, so everything stays yours."
+      }
+    ]
+  }
+}
