@@ -11,9 +11,64 @@ const SOCIALS = [["instagram", "Instagram"], ["tiktok", "TikTok"], ["facebook", 
 const telHref = p => "tel:" + String(p ?? "").replace(/[^\d+]/g, "");
 const pad = n => String(n).padStart(2, "0");
 
+/* ------------------------------------------------------------------
+   Page layouts: which sections a page shows, in which order.
+   Stored per page as `layout: [{ id, type?, hidden? }]` (same for both languages).
+   Built-in sections use the page's own fields; added sections live in `blocks[id]`.
+------------------------------------------------------------------ */
+export const BUILTINS = {
+  home: {
+    trust: { label: "Especialidades" }, programs: { label: "Servicios" }, facilities: { label: "Estudio" },
+    stats: { label: "Cifras" }, testimonials: { label: "Testimonios" },
+  },
+  service: {
+    includes: { type: "grid", label: "Qué incluye", eyebrow: ["Qué incluye", "What's included"], title: ["Todo lo que\ntu marca necesita", "Everything\nyour brand needs"] },
+    process: { type: "steps", label: "Proceso", eyebrow: ["Proceso", "Process"], title: ["Cómo\ntrabajamos", "How we\nwork"] },
+    ideal: { type: "chips", label: "Ideal para", eyebrow: ["Ideal para", "Ideal for"], title: ["¿Es para\ntu marca?", "Is it right\nfor you?"] },
+    faq: { type: "faq", label: "Preguntas frecuentes", eyebrow: ["Preguntas frecuentes", "FAQ"], title: ["Lo que nos\npreguntan", "What people\nask us"] },
+    others: { type: "others", label: "Otros servicios" },
+  },
+  nosotros: {
+    mission: { type: "statement", label: "Misión", eyebrow: ["Nuestra misión", "Our mission"], textKey: "mission" },
+    values: { type: "grid", label: "Valores", eyebrow: ["Lo que creemos", "What we believe"], title: ["Nuestros\nvalores", "Our\nvalues"] },
+    steps: { type: "steps", label: "Cómo trabajamos", eyebrow: ["Cómo trabajamos", "How we work"], title: ["Del brief\na los resultados", "From brief\nto results"] },
+    team: { type: "team", label: "Equipo" },
+  },
+  casos: { cases: { type: "cases", label: "Casos" } },
+  blog: { posts: { type: "posts", label: "Lista de artículos" } },
+  empleos: {
+    areas: { type: "chips", label: "Áreas", eyebrow: ["Áreas", "Areas"], title: ["Donde solemos\nsumar talento", "Where we usually\nhire"] },
+    values: { type: "grid", label: "Lo que valoramos", eyebrow: ["Lo que valoramos", "What we value"], title: ["Cómo es\ntrabajar aquí", "What it's like\nto work here"] },
+    openings: { type: "statement", label: "Vacantes", eyebrow: ["Vacantes", "Openings"], textKey: "openings" },
+  },
+  legal: { sections: { type: "legal", label: "Secciones" } },
+  post: {},
+};
+export const DEFAULT_LAYOUTS = Object.fromEntries(Object.entries(BUILTINS).map(([k, v]) => [k, Object.keys(v).map(id => ({ id }))]));
+
+// Sections that can be added from the editor ("Agregar sección")
+export const BLOCK_TYPES = {
+  grid: { label: "Tarjetas", desc: "Varias tarjetas con título y texto." },
+  steps: { label: "Pasos", desc: "Una lista numerada, como un proceso." },
+  chips: { label: "Etiquetas", desc: "Frases cortas en píldoras." },
+  faq: { label: "Preguntas frecuentes", desc: "Preguntas que se abren al hacer clic." },
+  statement: { label: "Texto destacado", desc: "Una frase grande o un párrafo importante." },
+  imageText: { label: "Imagen con texto", desc: "Una imagen al lado de un título y un texto." },
+  cta: { label: "Llamado a la acción", desc: "Banda azul con botón para agendar una llamada." },
+};
+
+export function pageKind(id) {
+  if (id === "home") return "home";
+  const [kind, slug] = String(id).split("/");
+  if (kind === "services") return "service";
+  if (kind === "posts") return "post";
+  if (slug === "privacidad" || slug === "terminos") return "legal";
+  return slug;
+}
+
 /**
  * @param {object} c  { settings, home, ui, services:[{slug,es,en}], pages:{slug:{es,en}}, posts:[{slug,es,en}], templates:{ index, siteJs } }
- * @param {object} opts { preview?: boolean, lang?: "es"|"en" }
+ * @param {object} opts { preview?: boolean }
  * @returns {Record<string,string>} map of output path → HTML
  */
 export function render(c, opts = {}) {
@@ -26,11 +81,9 @@ export function render(c, opts = {}) {
   // data-edit markers only in the editor preview (keeps the live site clean)
   const ED = key => (preview ? ` data-edit="${esc(key)}"` : "");
   const pick = (obj, lang, key) => obj?.[lang]?.[key] ?? obj?.es?.[key] ?? "";
-  const L = (es, en, tag = "span") => `<${tag} data-l="es">${esc(es)}</${tag}><${tag} data-l="en">${esc(en ?? es)}</${tag}>`;
+  const L = (es, en, tag = "span") => `<${tag} data-l="es">${esc(es)}</${tag}><${tag} data-l="en">${esc(en || es)}</${tag}>`;
   const Lo = (obj, key) => L(pick(obj, "es", key), pick(obj, "en", key));
-  const item = (obj, key, i, field) => [obj.es?.[key]?.[i]?.[field] ?? "", obj.en?.[key]?.[i]?.[field] ?? obj.es?.[key]?.[i]?.[field] ?? ""];
-  const list = (obj, key) => obj.es?.[key] ?? [];
-  const lines = (es, en) => [["es", es], ["en", en ?? es]].map(([lang, txt]) => {
+  const lines = (es, en) => [["es", es], ["en", en || es]].map(([lang, txt]) => {
     const parts = splitLines(txt);
     const spans = parts.map((x, i) => `<span class="cl"><span class="ri" style="--dl:${i * 120}ms">${esc(x)}</span></span>`).join("");
     return `<span data-l="${lang}"><span class="sr-only">${esc(parts.join(" "))}</span><span aria-hidden="true">${spans}</span></span>`;
@@ -101,7 +154,7 @@ export function render(c, opts = {}) {
 </head>
 <body>
 <main>
-  <section class="phero">
+  <section class="phero"${ED(file + "|@section:hero")}>
     <div class="hero-bg"><div class="hero-plate" data-px="0,12"><img src="${esc(image)}" alt="" style="object-position:${esc(position || "50% 50%")}"${ED(file + "|image")}></div><div class="hero-ov"></div></div>
     ${header()}
     <div class="ph-body">
@@ -122,104 +175,162 @@ ${templates.siteJs}
 `;
   }
 
-  /* ---------- section blocks ---------- */
-  const secHead = (eyebrow, title) => `<span class="eyebrow">${eyebrow}</span><h2 class="h2 rv-lines">${title}</h2>`;
-  const grid = (file, obj, key, eyebrow, title) => {
-    const cards = list(obj, key).map((_, i) => `<li class="card rv" style="--dl:${i * 90}ms"${ED(`${file}|${key}.${i}`)}><span class="card-n">${pad(i + 1)}</span><h3${ED(`${file}|${key}.${i}.title`)}>${L(...item(obj, key, i, "title"))}</h3><p${ED(`${file}|${key}.${i}.text`)}>${L(...item(obj, key, i, "text"))}</p></li>`).join("");
-    return cards ? `<section class="sec">${secHead(eyebrow, title)}<ul class="grid">${cards}</ul></section>` : "";
+  /* ---------- reusable section renderers ----------
+     A "src" describes where a section's data lives:
+       { file, id, path, es, en, eyebrow:[es,en], title:[es,en], eyebrowPath?, titlePath? }
+     path = base path of the items list (e.g. "includes" or "blocks.b1.items") */
+  const txt = (src, i, f) => [src.es?.[i]?.[f] ?? "", src.en?.[i]?.[f] || src.es?.[i]?.[f] || ""];
+  const head = src => `<span class="eyebrow"${src.eyebrowPath ? ED(`${src.file}|${src.eyebrowPath}`) : ""}>${L(src.eyebrow[0], src.eyebrow[1])}</span>${src.title ? `<h2 class="h2 rv-lines"${src.titlePath ? ED(`${src.file}|${src.titlePath}`) : ""}>${lines(src.title[0], src.title[1])}</h2>` : ""}`;
+  const secOpen = (src, cls = "sec") => `<section class="${cls}"${ED(`${src.file}|@section:${src.id}`)}>`;
+  const P = (src, i, f) => ED(`${src.file}|${src.path}.${i}.${f}`);
+
+  const R = {
+    grid(src) {
+      const cards = (src.es || []).map((_, i) => `<li class="card rv" style="--dl:${i * 90}ms"><span class="card-n">${pad(i + 1)}</span><h3${P(src, i, "title")}>${L(...txt(src, i, "title"))}</h3><p${P(src, i, "text")}>${L(...txt(src, i, "text"))}</p></li>`).join("");
+      return cards ? `${secOpen(src)}${head(src)}<ul class="grid">${cards}</ul></section>` : "";
+    },
+    steps(src) {
+      const rows = (src.es || []).map((_, i) => `<li class="step rv" style="--dl:${i * 90}ms"><span class="pidx">${pad(i + 1)}</span><div class="pbody"><h3 class="pname"${P(src, i, "title")}>${L(...txt(src, i, "title"))}</h3><p class="pdesc"${P(src, i, "text")}>${L(...txt(src, i, "text"))}</p></div></li>`).join("");
+      return rows ? `${secOpen(src, "sec surface")}${head(src)}<ol class="steps">${rows}</ol></section>` : "";
+    },
+    chips(src) {
+      const cc = (src.es || []).map((_, i) => `<li class="chip-i rv" style="--dl:${i * 70}ms"${P(src, i, "text")}><span class="dotm"></span>${L(...txt(src, i, "text"))}</li>`).join("");
+      return cc ? `${secOpen(src)}${head(src)}<ul class="chips">${cc}</ul></section>` : "";
+    },
+    faq(src) {
+      const q = (src.es || []).map((_, i) => `<details class="qa rv" style="--dl:${i * 80}ms"${preview ? " open" : ""}><summary${P(src, i, "question")}>${L(...txt(src, i, "question"))}<span class="plus" aria-hidden="true"></span></summary><p${P(src, i, "answer")}>${L(...txt(src, i, "answer"))}</p></details>`).join("");
+      return q ? `${secOpen(src, "sec surface")}${head(src)}<div class="faq">${q}</div></section>` : "";
+    },
+    statement(src) {
+      return `${secOpen(src)}${head({ ...src, title: null })}<p class="statement rv"${ED(`${src.file}|${src.textPath}`)}>${L(src.text[0], src.text[1])}</p></section>`;
+    },
+    imageText(src) {
+      return `${secOpen(src)}<div class="it${src.side === "right" ? " it-right" : ""}">
+  <div class="it-img rv"${ED(`${src.file}|${src.base}.image`)}>${src.image ? `<img src="${esc(src.image)}" alt="" loading="lazy">` : ""}</div>
+  <div class="it-txt">${head(src)}<p class="it-p rv"${ED(`${src.file}|${src.base}.text`)}>${L(src.text[0], src.text[1])}</p></div>
+</div></section>`;
+    },
+    cta(src) {
+      return `${secOpen(src)}<div class="ctab rv"><h2 class="ctab-t"${ED(`${src.file}|${src.base}.title`)}>${lines(src.title[0], src.title[1])}</h2>
+  <p class="ctab-p"${ED(`${src.file}|${src.base}.text`)}>${L(src.text[0], src.text[1])}</p>
+  <a class="pill light" href="${CTA}"${ED(`${src.file}|${src.base}.button`)}>${L(src.button[0] || "Agenda una llamada", src.button[1] || "Book a call")}<span class="ar">${arrow()}</span></a></div></section>`;
+    },
   };
-  const steps = (file, obj, key, eyebrow, title) => {
-    const rows = list(obj, key).map((_, i) => `<li class="step rv" style="--dl:${i * 90}ms"><span class="pidx">${pad(i + 1)}</span><div class="pbody"><h3 class="pname"${ED(`${file}|${key}.${i}.title`)}>${L(...item(obj, key, i, "title"))}</h3><p class="pdesc"${ED(`${file}|${key}.${i}.text`)}>${L(...item(obj, key, i, "text"))}</p></div></li>`).join("");
-    return rows ? `<section class="sec surface">${secHead(eyebrow, title)}<ol class="steps">${rows}</ol></section>` : "";
-  };
-  const chips = (file, obj, key, eyebrow, title) => {
-    const cc = list(obj, key).map((_, i) => `<li class="chip-i rv" style="--dl:${i * 70}ms"${ED(`${file}|${key}.${i}.text`)}><span class="dotm"></span>${L(...item(obj, key, i, "text"))}</li>`).join("");
-    return cc ? `<section class="sec">${secHead(eyebrow, title)}<ul class="chips">${cc}</ul></section>` : "";
-  };
-  const faq = (file, obj, eyebrow, title) => {
-    const q = list(obj, "faq").map((_, i) => `<details class="qa rv" style="--dl:${i * 80}ms"${preview ? " open" : ""}><summary${ED(`${file}|faq.${i}.question`)}>${L(...item(obj, "faq", i, "question"))}<span class="plus" aria-hidden="true"></span></summary><p${ED(`${file}|faq.${i}.answer`)}>${L(...item(obj, "faq", i, "answer"))}</p></details>`).join("");
-    return q ? `<section class="sec surface">${secHead(eyebrow, title)}<div class="faq">${q}</div></section>` : "";
-  };
+
+  // Custom section added in the editor
+  function customBlock(file, entry, obj) {
+    const es = obj.es?.blocks?.[entry.id]; if (!es) return "";
+    const en = obj.en?.blocks?.[entry.id] || {};
+    const base = `blocks.${entry.id}`;
+    const two = k => [es[k] ?? "", en[k] || es[k] || ""];
+    const src = { file, id: entry.id, base, path: `${base}.items`, es: es.items, en: en.items,
+      eyebrow: two("eyebrow"), title: two("title"), eyebrowPath: `${base}.eyebrow`, titlePath: `${base}.title`,
+      text: two("text"), textPath: `${base}.text`, button: two("button"), image: es.image, side: es.side };
+    const type = es.type || entry.type;
+    return R[type] ? R[type](src) : "";
+  }
+
+  // Built-in section of a page (data in the page's own fields)
+  function builtinSrc(file, kind, id, obj) {
+    const b = BUILTINS[kind][id];
+    return { file, id, path: id, es: obj.es?.[id], en: obj.en?.[id], eyebrow: b.eyebrow, title: b.title,
+      text: b.textKey ? [pick(obj, "es", b.textKey), pick(obj, "en", b.textKey)] : null, textPath: b.textKey };
+  }
+
+  function sectionsOf(kind, file, obj, special = {}) {
+    const lay = obj.es?.layout || DEFAULT_LAYOUTS[kind] || [];
+    return lay.filter(e => !e.hidden).map(e => {
+      const b = BUILTINS[kind]?.[e.id];
+      if (!b) return customBlock(file, e, obj);
+      if (special[e.id]) return special[e.id]();
+      return R[b.type] ? R[b.type](builtinSrc(file, kind, e.id, obj)) : "";
+    }).join("");
+  }
+
   const heroOf = (file, obj, eyebrowHtml, extra = {}) => ({
     file,
-    titleEs: splitLines(obj.es.title).join(" "), titleEn: splitLines(obj.en?.title ?? obj.es.title).join(" "),
+    titleEs: splitLines(obj.es.title).join(" "), titleEn: splitLines(obj.en?.title || obj.es.title).join(" "),
     descEs: obj.es.lede, image: obj.es.image, position: obj.es.imagePosition,
     eyebrow: eyebrowHtml, title: lines(obj.es.title, obj.en?.title), lede: Lo(obj, "lede"), ...extra,
   });
 
   const files = {};
 
+  /* ---------- services ---------- */
   services.forEach((s, n) => {
     const f = `services/${s.slug}`;
-    const others = services.filter(o => o.slug !== s.slug).map(o => `<li><a class="other rv" href="/${o.slug}.html"><span>${L(o.es.name, o.en?.name)}</span><span class="parr"><span class="ag">${arrow()}</span></span></a></li>`).join("");
-    const body = [
-      grid(f, s, "includes", L("Qué incluye", "What's included"), lines("Todo lo que\ntu marca necesita", "Everything\nyour brand needs")),
-      steps(f, s, "process", L("Proceso", "Process"), lines("Cómo\ntrabajamos", "How we\nwork")),
-      chips(f, s, "ideal", L("Ideal para", "Ideal for"), lines("¿Es para\ntu marca?", "Is it right\nfor you?")),
-      faq(f, s, L("Preguntas frecuentes", "FAQ"), lines("Lo que nos\npreguntan", "What people\nask us")),
-      others ? `<section class="sec">${secHead(L("Otros servicios", "Other services"), lines("Sigue\nexplorando", "Keep\nexploring"))}<ul class="others">${others}</ul></section>` : "",
-    ].join("");
-    files[`${s.slug}.html`] = layout({ ...heroOf(f, s, L(`Servicio ${pad(n + 1)}`, `Service ${pad(n + 1)}`)), body });
+    const others = () => {
+      const items = services.filter(o => o.slug !== s.slug).map(o => `<li><a class="other rv" href="/${o.slug}.html"><span>${L(o.es.name, o.en?.name)}</span><span class="parr"><span class="ag">${arrow()}</span></span></a></li>`).join("");
+      return items ? `<section class="sec"${ED(`${f}|@section:others`)}><span class="eyebrow">${L("Otros servicios", "Other services")}</span><h2 class="h2 rv-lines">${lines("Sigue\nexplorando", "Keep\nexploring")}</h2><ul class="others">${items}</ul></section>` : "";
+    };
+    files[`${s.slug}.html`] = layout({ ...heroOf(f, s, L(`Servicio ${pad(n + 1)}`, `Service ${pad(n + 1)}`)), body: sectionsOf("service", f, s, { others }) });
   });
 
+  /* ---------- simple pages ---------- */
   if (pages.nosotros) {
     const p = pages.nosotros, f = "pages/nosotros";
-    const team = list(p, "team");
-    const teamHtml = team.length
-      ? `<ul class="team">${team.map((m, i) => `<li class="member-c rv" style="--dl:${i * 90}ms"${ED(`${f}|team.${i}`)}>${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy">` : ""}<h3>${esc(m.name)}</h3><p>${L(...item(p, "team", i, "role"))}</p></li>`).join("")}</ul>`
-      : `<div class="ph rv"${ED(`${f}|team`)}>${L("[Agrega a tu equipo desde el editor: foto, nombre y rol.]", "[Add your team from the editor: photo, name and role.]")}</div>`;
-    files["nosotros.html"] = layout({ ...heroOf(f, p, L("Nosotros", "About")), body: [
-      `<section class="sec"><span class="eyebrow">${L("Nuestra misión", "Our mission")}</span><p class="statement rv"${ED(f + "|mission")}>${Lo(p, "mission")}</p></section>`,
-      grid(f, p, "values", L("Lo que creemos", "What we believe"), lines("Nuestros\nvalores", "Our\nvalues")),
-      steps(f, p, "steps", L("Cómo trabajamos", "How we work"), lines("Del brief\na los resultados", "From brief\nto results")),
-      `<section class="sec surface"><span class="eyebrow">${L("Equipo", "Team")}</span>${teamHtml}</section>`,
-    ].join("") });
+    const team = () => {
+      const list = p.es?.team || [];
+      const inner = list.length
+        ? `<ul class="team">${list.map((m, i) => `<li class="member-c rv" style="--dl:${i * 90}ms"${ED(`${f}|team.${i}`)}>${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" loading="lazy">` : ""}<h3>${esc(m.name)}</h3><p>${L(m.role, p.en?.team?.[i]?.role)}</p></li>`).join("")}</ul>`
+        : `<div class="ph rv"${ED(`${f}|team`)}>${L("[Agrega a tu equipo desde el editor: foto, nombre y rol.]", "[Add your team from the editor: photo, name and role.]")}</div>`;
+      return `<section class="sec surface"${ED(`${f}|@section:team`)}><span class="eyebrow">${L("Equipo", "Team")}</span>${inner}</section>`;
+    };
+    files["nosotros.html"] = layout({ ...heroOf(f, p, L("Nosotros", "About")), body: sectionsOf("nosotros", f, p, { team }) });
   }
 
   if (pages.casos) {
     const p = pages.casos, f = "pages/casos";
-    const cards = list(p, "cases").map((cs, i) => `<li class="case rv" style="--dl:${i * 120}ms">
+    const cases = () => {
+      const src = { es: p.es?.cases, en: p.en?.cases };
+      const cards = (p.es?.cases || []).map((cs, i) => `<li class="case rv" style="--dl:${i * 120}ms">
   <div class="case-img"${ED(`${f}|cases.${i}.image`)}>${cs.image ? `<img src="${esc(cs.image)}" alt="" loading="lazy">` : ""}</div>
-  <div class="case-body"><span class="tag"${ED(`${f}|cases.${i}.category`)}>${L(...item(p, "cases", i, "category"))}</span><h3${ED(`${f}|cases.${i}.client`)}>${L(...item(p, "cases", i, "client"))}</h3>
-  <dl><div><dt>${L("Reto", "Challenge")}</dt><dd${ED(`${f}|cases.${i}.challenge`)}>${L(...item(p, "cases", i, "challenge"))}</dd></div>
-  <div><dt>${L("Solución", "Solution")}</dt><dd${ED(`${f}|cases.${i}.solution`)}>${L(...item(p, "cases", i, "solution"))}</dd></div>
-  <div><dt>${L("Resultado", "Result")}</dt><dd${ED(`${f}|cases.${i}.result`)}>${L(...item(p, "cases", i, "result"))}</dd></div></dl></div></li>`).join("");
-    files["casos.html"] = layout({ ...heroOf(f, p, L("Casos de éxito", "Case studies")), body: `<section class="sec"><ul class="cases">${cards}</ul></section>` });
+  <div class="case-body"><span class="tag"${ED(`${f}|cases.${i}.category`)}>${L(...txt(src, i, "category"))}</span><h3${ED(`${f}|cases.${i}.client`)}>${L(...txt(src, i, "client"))}</h3>
+  <dl><div><dt>${L("Reto", "Challenge")}</dt><dd${ED(`${f}|cases.${i}.challenge`)}>${L(...txt(src, i, "challenge"))}</dd></div>
+  <div><dt>${L("Solución", "Solution")}</dt><dd${ED(`${f}|cases.${i}.solution`)}>${L(...txt(src, i, "solution"))}</dd></div>
+  <div><dt>${L("Resultado", "Result")}</dt><dd${ED(`${f}|cases.${i}.result`)}>${L(...txt(src, i, "result"))}</dd></div></dl></div></li>`).join("");
+      return `<section class="sec"${ED(`${f}|@section:cases`)}><ul class="cases">${cards}</ul></section>`;
+    };
+    files["casos.html"] = layout({ ...heroOf(f, p, L("Casos de éxito", "Case studies")), body: sectionsOf("casos", f, p, { cases }) });
   }
 
   if (pages.empleos) {
     const p = pages.empleos, f = "pages/empleos";
-    files["empleos.html"] = layout({ ...heroOf(f, p, L("Empleos", "Careers")), body: [
-      chips(f, p, "areas", L("Áreas", "Areas"), lines("Donde solemos\nsumar talento", "Where we usually\nhire")),
-      grid(f, p, "values", L("Lo que valoramos", "What we value"), lines("Cómo es\ntrabajar aquí", "What it's like\nto work here")),
-      `<section class="sec"><span class="eyebrow">${L("Vacantes", "Openings")}</span><p class="statement rv"${ED(f + "|openings")}>${Lo(p, "openings")}</p></section>`,
-    ].join("") });
+    files["empleos.html"] = layout({ ...heroOf(f, p, L("Empleos", "Careers")), body: sectionsOf("empleos", f, p) });
   }
 
   for (const slug of ["privacidad", "terminos"]) {
     const p = pages[slug]; if (!p) continue;
     const f = `pages/${slug}`;
-    const secs = list(p, "sections").map((_, i) => `<section class="lg rv"><h2${ED(`${f}|sections.${i}.title`)}>${L(...item(p, "sections", i, "title"))}</h2><p${ED(`${f}|sections.${i}.text`)}>${L(...item(p, "sections", i, "text"))}</p></section>`).join("");
-    files[`${slug}.html`] = layout({ ...heroOf(f, p, L("Legal", "Legal"), { ctas: false }), body: `<section class="sec"><div class="legal">${secs}</div></section>` });
+    const sections = () => {
+      const src = { es: p.es?.sections, en: p.en?.sections };
+      const secs = (p.es?.sections || []).map((_, i) => `<section class="lg rv"><h2${ED(`${f}|sections.${i}.title`)}>${L(...txt(src, i, "title"))}</h2><p${ED(`${f}|sections.${i}.text`)}>${L(...txt(src, i, "text"))}</p></section>`).join("");
+      return `<section class="sec"${ED(`${f}|@section:sections`)}><div class="legal">${secs}</div></section>`;
+    };
+    files[`${slug}.html`] = layout({ ...heroOf(f, p, L("Legal", "Legal"), { ctas: false }), body: sectionsOf("legal", f, p, { sections }) });
   }
 
+  /* ---------- blog ---------- */
   const fmtDate = (d, lang) => { try { return new Date(d + "T12:00:00").toLocaleDateString(lang === "es" ? "es-ES" : "en-US", { day: "numeric", month: "long", year: "numeric" }); } catch { return d; } };
   if (pages.blog) {
-    const p = pages.blog;
-    const cards = posts.map((post, i) => {
-      const live = !!post.es.published, f = `posts/${post.slug}`;
-      const inner = `<div class="post-img">${post.es.image ? `<img src="${esc(post.es.image)}" alt="" loading="lazy">` : ""}</div>
+    const p = pages.blog, f = "pages/blog";
+    const postsList = () => {
+      const cards = posts.map((post, i) => {
+        const live = !!post.es.published;
+        const inner = `<div class="post-img">${post.es.image ? `<img src="${esc(post.es.image)}" alt="" loading="lazy">` : ""}</div>
   <div class="post-meta"><span class="tag">${Lo(post, "category")}</span><span class="soon">${live ? L(fmtDate(post.es.date, "es"), fmtDate(post.es.date, "en")) : L("Próximamente", "Coming soon")}</span></div>
   <h3>${Lo(post, "title")}</h3><p>${Lo(post, "excerpt")}</p>`;
-      return `<li class="post rv" style="--dl:${i * 120}ms"${ED(f + "|title")}>${live || preview ? `<a href="/blog/${post.slug}.html" class="post-link">${inner}</a>` : inner}</li>`;
-    }).join("");
-    files["blog.html"] = layout({ ...heroOf("pages/blog", p, L("Blog", "Blog")), body: `<section class="sec"><ul class="posts">${cards}</ul></section>` });
+        return `<li class="post rv" style="--dl:${i * 120}ms"${ED(`posts/${post.slug}|title`)}>${live || preview ? `<a href="/blog/${post.slug}.html" class="post-link">${inner}</a>` : inner}</li>`;
+      }).join("");
+      return `<section class="sec"${ED(`${f}|@section:posts`)}><ul class="posts">${cards}</ul></section>`;
+    };
+    files["blog.html"] = layout({ ...heroOf(f, p, L("Blog", "Blog")), body: sectionsOf("blog", f, p, { posts: postsList }) });
     for (const post of posts.filter(x => x.es.published || preview)) {
-      const f = `posts/${post.slug}`;
-      const body = `<section class="sec"><article class="article rv"${ED(f + "|body")}><div data-l="es">${marked.parse(post.es.body || "")}</div><div data-l="en">${marked.parse(post.en?.body || post.es.body || "")}</div>
-      <p class="back"><a href="/blog.html">← ${L("Volver al blog", "Back to the blog")}</a></p></article></section>`;
+      const pf = `posts/${post.slug}`;
+      const body = `<section class="sec"${ED(`${pf}|@section:body`)}><article class="article rv"${ED(pf + "|body")}><div data-l="es">${marked.parse(post.es.body || "")}</div><div data-l="en">${marked.parse(post.en?.body || post.es.body || "")}</div>
+      <p class="back"><a href="/blog.html">← ${L("Volver al blog", "Back to the blog")}</a></p></article></section>` + sectionsOf("post", pf, post);
       files[`blog/${post.slug}.html`] = layout({
-        file: f, titleEs: post.es.title, titleEn: post.en?.title ?? post.es.title, descEs: post.es.excerpt,
+        file: pf, titleEs: post.es.title, titleEn: post.en?.title || post.es.title, descEs: post.es.excerpt,
         image: post.es.image, position: "50% 50%", ctas: false,
         eyebrow: `${Lo(post, "category")} · ${L(fmtDate(post.es.date, "es"), fmtDate(post.es.date, "en"))}`,
         title: lines(post.es.title, post.en?.title), lede: Lo(post, "excerpt"), body,
@@ -230,10 +341,24 @@ ${templates.siteJs}
   /* ---------- home ---------- */
   {
     let s = templates.index;
+    // reorder / hide the movable home sections
+    const chunks = {};
+    s = s.replace(/<!--@@S:(\w+)@@-->([\s\S]*?)<!--@@\/S:\1@@-->/g, (_, id, html) => { chunks[id] = html; return `<!--@@SLOT:${id}@@-->`; });
+    const lay = (home.es.layout || DEFAULT_LAYOUTS.home).filter(e => chunks[e.id]);
+    for (const id of Object.keys(chunks)) if (!lay.some(e => e.id === id)) lay.push({ id });
+    const ordered = lay.map(e => {
+      let html = chunks[e.id];
+      html = html.replace("<section", `<section${e.hidden ? " hidden" : ""}${ED(`home|@section:${e.id}`)}`);
+      return html;
+    }).join("\n");
+    const slots = Object.keys(chunks);
+    s = s.replace(`<!--@@SLOT:${slots[0]}@@-->`, ordered);
+    for (const id of slots.slice(1)) s = s.replace(`<!--@@SLOT:${id}@@-->`, "");
+
     const T = {};
     for (const lang of ["es", "en"]) {
       const h = { ...home.es, ...(home[lang] || {}) };
-      const g = (key, i, f) => home[lang]?.[key]?.[i]?.[f] ?? home.es[key]?.[i]?.[f] ?? "";
+      const g = (key, i, f) => home[lang]?.[key]?.[i]?.[f] || home.es[key]?.[i]?.[f] || "";
       const t = { ...ui[lang] };
       Object.assign(t, {
         heroTitle: splitLines(h.heroTitle).join(" "), tagline: splitLines(h.tagline).join("|"),
@@ -243,7 +368,7 @@ ${templates.siteJs}
         coll: (home.es.coll || []).map((cc, i) => ({ brand: g("coll", i, "brand"), title: g("coll", i, "title"), cta: g("coll", i, "cta"), href: `/${cc.link || services[0]?.slug}.html`, alt: "" })),
         trust: (home.es.trust || []).map((_, i) => ({ words: [1, 2, 3, 4].map(k => g("trust", i, "word" + k)), name: g("trust", i, "name"), role: g("trust", i, "role"), alt: "" })),
         svcEyebrow: h.svcEyebrow, svcTitle: splitLines(h.svcTitle).join("|"),
-        svc: services.map(sv => ({ name: sv[lang]?.name ?? sv.es.name, desc: sv[lang]?.summary ?? sv.es.summary, href: `/${sv.slug}.html` })),
+        svc: services.map(sv => ({ name: sv[lang]?.name || sv.es.name, desc: sv[lang]?.summary || sv.es.summary, href: `/${sv.slug}.html` })),
         facTitle: splitLines(h.facTitle).join("|"), facBody: h.facBody,
         tile1Name: h.tile1?.name, tile1Desc: h.tile1?.desc, tile2Name: h.tile2?.name, tile2Desc: h.tile2?.desc,
         statsEyebrow: h.statsEyebrow, statsTitle: splitLines(h.statsTitle).join("|"),
@@ -253,7 +378,7 @@ ${templates.siteJs}
       });
       (home.es.stats || []).forEach((_, i) => { t[`statL${i}`] = g("stats", i, "label"); });
       (home.es.testimonials || []).forEach((_, i) => { t[`tq${i}`] = g("testimonials", i, "quote"); t[`tn${i}`] = g("testimonials", i, "name"); t[`tr${i}`] = g("testimonials", i, "role"); });
-      services.forEach((sv, i) => { t[`fsvc${i}`] = sv[lang]?.name ?? sv.es.name; });
+      services.forEach((sv, i) => { t[`fsvc${i}`] = sv[lang]?.name || sv.es.name; });
       T[lang] = t;
     }
     const IMG = {

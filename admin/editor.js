@@ -1,5 +1,5 @@
 // Virtualiamn — visual editor (live preview, click-to-edit, publish to GitHub → Netlify)
-import { render } from "./render.mjs";
+import { render, BUILTINS, DEFAULT_LAYOUTS, BLOCK_TYPES, pageKind } from "./render.mjs";
 import { SCHEMAS, homeKey, HOME_IMAGES } from "./schema.js";
 
 const REPO = "nicol1reyes/virtualiamn";
@@ -45,6 +45,10 @@ const ICONS = {
   home: '<path d="M4 11l8-7 8 7v9a1 1 0 01-1 1h-5v-6h-4v6H5a1 1 0 01-1-1z"/>',
   settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/>',
   post: '<path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+  grip: '<circle cx="9" cy="6" r="1.2"/><circle cx="15" cy="6" r="1.2"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/><circle cx="9" cy="18" r="1.2"/><circle cx="15" cy="18" r="1.2"/>',
+  eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  "eye-off": '<path d="M3 3l18 18M10.6 5.1A10.9 10.9 0 0112 5c6.4 0 10 7 10 7a17.8 17.8 0 01-3.2 4.1M6.6 6.6A17.6 17.6 0 002 12s3.6 7 10 7a10 10 0 005.4-1.6M9.9 9.9a3 3 0 004.2 4.2"/>',
+  copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/>',
 };
 const ic = name => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ""}</svg>`;
 const paintIcons = (root = document) => $$("[data-ic]", root).forEach(el => { el.innerHTML = ic(el.dataset.ic); });
@@ -295,14 +299,148 @@ function goPage(id, sectionId = null) {
   renderPreview(true);
 }
 
+/* ---------------------------------------------------------------- sections & layout */
+const HOME_LAYOUT_SECTION = { trust: "trust", programs: "services", facilities: "studio", stats: "stats", testimonials: "testimonials" };
+const DUPLICABLE = ["grid", "steps", "chips", "faq", "statement", "imageText", "cta"];
+const titleTextFields = [{ k: "title", t: "text", l: "Título" }, { k: "text", t: "textarea", l: "Texto" }];
+const BLOCK_ICON = { grid: "cards", steps: "list", chips: "tag", faq: "quote", statement: "text", imageText: "image", cta: "flag" };
+
+function blockFields(id, type) {
+  const b = `blocks.${id}`;
+  const head = [{ k: `${b}.eyebrow`, t: "text", l: "Etiqueta" }, { k: `${b}.title`, t: "textarea", l: "Título", lines: true }];
+  const list = (l, itemTitle, fields) => ({ k: `${b}.items`, t: "list", l, itemTitle, fields });
+  switch (type) {
+    case "grid": return [...head, list("Tarjeta", "title", titleTextFields)];
+    case "steps": return [...head, list("Paso", "title", titleTextFields)];
+    case "chips": return [...head, list("Etiqueta", "text", [{ k: "text", t: "text", l: "Texto" }])];
+    case "faq": return [...head, list("Pregunta", "question", [{ k: "question", t: "text", l: "Pregunta" }, { k: "answer", t: "textarea", l: "Respuesta" }])];
+    case "statement": return [head[0], { k: `${b}.text`, t: "textarea", l: "Texto" }];
+    case "imageText": return [...head, { k: `${b}.text`, t: "textarea", l: "Texto" }, { k: `${b}.image`, t: "image", l: "Imagen", shared: true },
+      { k: `${b}.side`, t: "select", l: "Posición de la imagen", shared: true, options: [{ value: "left", label: "Izquierda" }, { value: "right", label: "Derecha" }] }];
+    case "cta": return [{ k: `${b}.title`, t: "textarea", l: "Título", lines: true }, { k: `${b}.text`, t: "textarea", l: "Texto" }, { k: `${b}.button`, t: "text", l: "Texto del botón" }];
+    default: return [];
+  }
+}
+function blockDefaults(type) {
+  const two = (es, en) => ({ es, en });
+  const items = (n, mk) => two(Array.from({ length: n }, (_, i) => mk("es", i)), Array.from({ length: n }, (_, i) => mk("en", i)));
+  const tt = (lang, i) => (lang === "es" ? { title: `Elemento ${i + 1}`, text: "Describe este punto en una o dos frases." } : { title: `Item ${i + 1}`, text: "Describe this point in one or two sentences." });
+  const base = { eyebrow: two("Nueva sección", "New section"), title: two("Título de\nla sección", "Section\ntitle") };
+  switch (type) {
+    case "grid": return { ...base, items: items(3, tt) };
+    case "steps": return { ...base, items: items(3, tt) };
+    case "chips": return { ...base, items: items(3, (l, i) => ({ text: l === "es" ? `Etiqueta ${i + 1}` : `Tag ${i + 1}` })) };
+    case "faq": return { ...base, items: items(3, (l, i) => (l === "es" ? { question: `¿Pregunta ${i + 1}?`, answer: "Escribe aquí la respuesta." } : { question: `Question ${i + 1}?`, answer: "Write the answer here." })) };
+    case "statement": return { eyebrow: base.eyebrow, text: two("Escribe aquí una frase importante para tu marca.", "Write an important statement for your brand here.") };
+    case "imageText": return { ...base, text: two("Cuenta aquí la historia o el detalle que acompaña a la imagen.", "Tell the story or detail that goes with the image here."), image: "/assets/uploads/swirl.webp", side: "left" };
+    case "cta": return { title: two("¿Listos para\nempezar?", "Ready to\nget started?"), text: two("Agenda una llamada y armamos juntos tu plan.", "Book a call and we'll build your plan together."), button: two("Agenda una llamada", "Book a call") };
+    default: return {};
+  }
+}
+function getLayout() {
+  const d = fileData(S.page);
+  const kind = pageKind(S.page);
+  return clone(d?.es?.layout || DEFAULT_LAYOUTS[kind] || []);
+}
+function setLayout(lay) {
+  const d = fileData(S.page);
+  d.es ??= {}; d.en ??= {};
+  d.es.layout = clone(lay); d.en.layout = clone(lay);
+  changed();
+}
+const builtinOf = id => BUILTINS[pageKind(S.page)]?.[id];
+function customType(id) { return fileData(S.page)?.es?.blocks?.[id]?.type; }
+function sectionMeta(entry) {
+  const b = builtinOf(entry.id);
+  const schema = pageSchema(S.page);
+  if (b) {
+    const sid = S.page === "home" ? HOME_LAYOUT_SECTION[entry.id] : entry.id;
+    const sec = schema?.sections.find(s => s.id === sid);
+    return { id: entry.id, label: b.label, icon: sec?.icon || BLOCK_ICON[b.type] || "list", section: sec || null, type: b.type, builtin: true };
+  }
+  const type = customType(entry.id) || entry.type;
+  const t = BLOCK_TYPES[type];
+  const title = String(fileData(S.page)?.es?.blocks?.[entry.id]?.title || fileData(S.page)?.es?.blocks?.[entry.id]?.eyebrow || "").split("\n").join(" ");
+  return { id: entry.id, label: (t?.label || "Sección") + (title ? ` · ${title}` : ""), icon: BLOCK_ICON[type] || "list", type, builtin: false,
+    section: { id: entry.id, icon: BLOCK_ICON[type], label: t?.label || "Sección", fields: blockFields(entry.id, type) } };
+}
+// all sections that can be opened on this page (fixed + layout + custom)
+function findSection(id) {
+  const schema = pageSchema(S.page);
+  const direct = schema?.sections.find(s => s.id === id);
+  if (direct) return direct;
+  if (S.page === "home" && HOME_LAYOUT_SECTION[id]) return schema.sections.find(s => s.id === HOME_LAYOUT_SECTION[id]);
+  if (fileData(S.page)?.es?.blocks?.[id]) return sectionMeta({ id }).section;
+  return null;
+}
+function layoutSectionIds() {
+  const kind = pageKind(S.page);
+  const ids = new Set(Object.keys(BUILTINS[kind] || {}));
+  if (S.page === "home") return new Set(Object.values(HOME_LAYOUT_SECTION));
+  return ids;
+}
+function newBlockId() { return "b" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+function addBlock(type, afterIndex = null) {
+  const id = newBlockId();
+  const d = fileData(S.page); d.es ??= {}; d.en ??= {};
+  const def = blockDefaults(type);
+  for (const lang of ["es", "en"]) {
+    d[lang].blocks ??= {};
+    const data = { type };
+    for (const [k, v] of Object.entries(def)) data[k] = v && typeof v === "object" && "es" in v ? clone(v[lang]) : clone(v);
+    d[lang].blocks[id] = data;
+  }
+  const lay = getLayout();
+  lay.splice(afterIndex == null ? lay.length : afterIndex + 1, 0, { id, type });
+  setLayout(lay);
+  return id;
+}
+function duplicateSection(i) {
+  const lay = getLayout(), entry = lay[i], b = builtinOf(entry.id);
+  const d = fileData(S.page); d.es ??= {}; d.en ??= {};
+  const id = newBlockId();
+  if (b) {
+    if (!DUPLICABLE.includes(b.type)) return;
+    for (const [li, lang] of ["es", "en"].entries()) {
+      d[lang].blocks ??= {};
+      const data = { type: b.type, eyebrow: b.eyebrow?.[li] || "", title: b.title?.[li] || "" };
+      if (b.type === "statement") data.text = d[lang][b.textKey] ?? d.es[b.textKey] ?? "";
+      else data.items = clone(d[lang][entry.id] ?? d.es[entry.id] ?? []);
+      d[lang].blocks[id] = data;
+    }
+    lay.splice(i + 1, 0, { id, type: b.type });
+  } else {
+    for (const lang of ["es", "en"]) { d[lang].blocks ??= {}; d[lang].blocks[id] = clone(d[lang].blocks?.[entry.id] ?? d.es.blocks[entry.id]); }
+    lay.splice(i + 1, 0, { id, type: customType(entry.id) });
+  }
+  setLayout(lay);
+  toast("Sección duplicada.");
+}
+function removeSection(i) {
+  const lay = getLayout(), entry = lay[i];
+  if (builtinOf(entry.id)) return;
+  if (!window.confirm(`¿Eliminar la sección “${sectionMeta(entry).label}”?`)) return;
+  const d = fileData(S.page);
+  for (const lang of ["es", "en"]) if (d[lang]?.blocks) delete d[lang].blocks[entry.id];
+  lay.splice(i, 1);
+  setLayout(lay);
+}
+function toggleSection(i) { const lay = getLayout(); lay[i].hidden = !lay[i].hidden; setLayout(lay); }
+function moveSection(from, to) {
+  const lay = getLayout();
+  if (to < 0 || to >= lay.length || from === to) return;
+  const [e] = lay.splice(from, 1); lay.splice(to, 0, e);
+  setLayout(lay);
+}
+
 /* ---------------------------------------------------------------- sidebar */
 function renderSidebar() {
   const sb = $("#sidebar");
   $("#page-name").textContent = pageName(S.page);
   const schema = pageSchema(S.page);
   if (!schema) { sb.innerHTML = '<div class="sb-scroll"><p class="panel-hint">Esta página no tiene campos editables.</p></div>'; return; }
-  const section = schema.sections.find(s => s.id === S.section);
-  if (!section) return renderSectionList(sb, schema);
+  const section = S.section ? findSection(S.section) : null;
+  if (!section) { S.section = null; return renderSectionList(sb, schema); }
   sb.innerHTML = `<div class="sb-head"><button class="icon-btn" id="sb-back" type="button" aria-label="Volver">${ic("back")}</button><h2>${escHtml(section.label)}</h2>${schema.single ? "" : `<span class="badge lang">${S.lang.toUpperCase()}</span>`}</div><div class="sb-scroll"><div class="fields" id="fields"></div></div>`;
   $("#sb-back").addEventListener("click", () => { S.section = null; renderSidebar(); });
   const box = $("#fields");
@@ -311,21 +449,91 @@ function renderSidebar() {
 }
 
 function renderSectionList(sb, schema) {
-  const isPost = S.page.startsWith("posts/"), isBlog = S.page === "pages/blog";
+  const isPost = S.page.startsWith("posts/"), isBlog = S.page === "pages/blog", isHome = S.page === "home";
+  const movable = layoutSectionIds();
+  const fixed = schema.sections.filter(s => !movable.has(s.id));
+  const top = isHome ? fixed.filter(s => s.id !== "closing") : fixed;
+  const bottom = isHome ? fixed.filter(s => s.id === "closing") : [];
+  const lay = schema.single ? [] : getLayout();
+  const row = s => `<button class="sec-item" type="button" data-sec="${s.id}">${ic(s.icon)}<span>${escHtml(s.label)}</span><span class="chev">${ic("chevron")}</span></button>`;
+  const layRows = lay.map((e, i) => {
+    const m = sectionMeta(e);
+    const canDup = m.builtin ? DUPLICABLE.includes(m.type) : true;
+    return `<div class="lay-row${e.hidden ? " is-hidden" : ""}" draggable="true" data-i="${i}">
+      <button class="grip" type="button" aria-label="Mover ${escHtml(m.label)} (usa las flechas)" data-grip="${i}">${ic("grip")}</button>
+      <button class="lay-open" type="button" data-open="${i}"${m.section ? "" : " disabled"}>${ic(m.icon)}<span class="t">${escHtml(m.label)}</span></button>
+      <span class="lay-actions">
+        ${canDup && !isHome ? `<button class="icon-btn" type="button" data-dup="${i}" aria-label="Duplicar" title="Duplicar">${ic("copy")}</button>` : ""}
+        ${!m.builtin ? `<button class="icon-btn" type="button" data-del="${i}" aria-label="Eliminar" title="Eliminar">${ic("trash")}</button>` : ""}
+        <button class="icon-btn" type="button" data-eye="${i}" aria-label="${e.hidden ? "Mostrar" : "Ocultar"}" title="${e.hidden ? "Mostrar" : "Ocultar"}">${ic(e.hidden ? "eye-off" : "eye")}</button>
+      </span></div>`;
+  }).join("");
+  const picker = isHome ? "" : `<button class="add-btn" type="button" id="add-sec">${ic("plus")} Agregar sección</button>
+      <div class="type-picker" id="type-picker" hidden>${Object.entries(BLOCK_TYPES).map(([k, t]) => `<button class="type-opt" type="button" data-type="${k}">${ic(BLOCK_ICON[k])}<span><b>${escHtml(t.label)}</b><small>${escHtml(t.desc)}</small></span></button>`).join("")}</div>`;
   sb.innerHTML = `<div class="sb-head"><h2>${escHtml(pageName(S.page))}</h2></div>
     <div class="sb-scroll">
-      <div class="sb-label">Secciones</div>
-      ${schema.sections.map(s => `<button class="sec-item" type="button" data-sec="${s.id}">${ic(s.icon)}<span>${escHtml(s.label)}</span><span class="chev">${ic("chevron")}</span></button>`).join("")}
+      ${top.length ? `<div class="sb-label">${isHome ? "Encabezado" : schema.single ? "Ajustes" : "Arriba"}</div>${top.map(row).join("")}` : ""}
+      ${schema.single ? "" : `<div class="sb-label">Secciones${isPost ? " debajo del artículo" : ""}</div>
+      <div class="lay-list" id="lay-list">${layRows || '<p class="panel-hint">Todavía no hay secciones aquí.</p>'}</div>${picker}`}
+      ${bottom.length ? `<div class="sb-label">Pie de página</div>${bottom.map(row).join("")}` : ""}
       ${isBlog ? postsBlock() : ""}
-      <p class="panel-hint">Consejo: haz clic sobre cualquier texto o imagen de la vista previa para editarlo.</p>
+      <p class="panel-hint">Arrastra las secciones para cambiar el orden. Haz clic sobre un texto o imagen de la vista previa para editarlo.</p>
     </div>
     <div class="sb-foot">
       ${isPost ? `<button class="btn btn-critical" type="button" id="del-post">${ic("trash")} Eliminar artículo</button>` : `<button class="sec-item" type="button" id="go-settings">${ic("settings")}<span>Datos de contacto y redes</span><span class="chev">${ic("chevron")}</span></button>`}
     </div>`;
   $$("[data-sec]", sb).forEach(b => b.addEventListener("click", () => { S.section = b.dataset.sec; renderSidebar(); }));
+  $$("[data-open]", sb).forEach(b => b.addEventListener("click", () => { const m = sectionMeta(getLayout()[+b.dataset.open]); if (m.section) { S.section = m.section.id; renderSidebar(); } }));
+  $$("[data-eye]", sb).forEach(b => b.addEventListener("click", () => { toggleSection(+b.dataset.eye); renderSidebar(); }));
+  $$("[data-dup]", sb).forEach(b => b.addEventListener("click", () => { duplicateSection(+b.dataset.dup); renderSidebar(); }));
+  $$("[data-del]", sb).forEach(b => b.addEventListener("click", () => { removeSection(+b.dataset.del); renderSidebar(); }));
+  $$("[data-grip]", sb).forEach(b => b.addEventListener("keydown", e => {
+    const i = +b.dataset.grip;
+    if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+    e.preventDefault();
+    const to = e.key === "ArrowUp" ? i - 1 : i + 1;
+    moveSection(i, to); renderSidebar();
+    $(`#sidebar [data-grip="${Math.max(0, Math.min(to, getLayout().length - 1))}"]`)?.focus();
+  }));
+  wireDrag(sb);
+  $("#add-sec")?.addEventListener("click", () => { const p = $("#type-picker"); p.hidden = !p.hidden; });
+  $$("[data-type]", sb).forEach(b => b.addEventListener("click", () => { const id = addBlock(b.dataset.type); S.section = id; renderSidebar(); renderPreview(); toast("Sección agregada al final de la página."); }));
   $("#go-settings")?.addEventListener("click", () => goPage("settings"));
   $("#del-post")?.addEventListener("click", deletePost);
   if (isBlog) wirePostsBlock(sb);
+}
+
+function wireDrag(sb) {
+  const list = $("#lay-list", sb); if (!list) return;
+  let from = null;
+  const rows = () => $$(".lay-row", list);
+  const clear = () => rows().forEach(r => r.classList.remove("drop-before", "drop-after", "dragging"));
+  list.addEventListener("dragstart", e => {
+    const r = e.target.closest(".lay-row"); if (!r) return;
+    from = +r.dataset.i; r.classList.add("dragging");
+    e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", String(from));
+  });
+  list.addEventListener("dragover", e => {
+    if (from == null) return;
+    e.preventDefault();
+    const r = e.target.closest(".lay-row"); if (!r) return;
+    rows().forEach(x => x.classList.remove("drop-before", "drop-after"));
+    const box = r.getBoundingClientRect();
+    r.classList.add(e.clientY < box.top + box.height / 2 ? "drop-before" : "drop-after");
+  });
+  list.addEventListener("drop", e => {
+    e.preventDefault();
+    const r = e.target.closest(".lay-row");
+    if (r && from != null) {
+      let to = +r.dataset.i;
+      const after = r.classList.contains("drop-after");
+      if (after) to += 1;
+      if (to > from) to -= 1;
+      moveSection(from, to);
+    }
+    from = null; clear(); renderSidebar();
+  });
+  list.addEventListener("dragend", () => { from = null; clear(); });
 }
 
 function postsBlock() {
@@ -533,7 +741,7 @@ async function addUpload(file) {
 /* ---------------------------------------------------------------- preview */
 const PREVIEW_HELPER = `<script>(function(){
   var css=document.createElement("style");
-  css.textContent="[data-v-hover]{outline:2px solid #005bd3!important;outline-offset:3px!important;cursor:pointer!important;border-radius:4px}";
+  css.textContent="[data-v-hover]{outline:2px solid #005bd3!important;outline-offset:3px!important;cursor:pointer!important;border-radius:4px}[data-v-hover][data-edit*='@section']{outline:2px dashed #005bd3!important;outline-offset:-4px!important}";
   document.head.appendChild(css);
   var SEL="[data-edit],[data-t],[data-words-t],[data-lines-t],[data-fade-t],#hero-img,#mem-img,#fac-icon,#tile1,#tile2";
   var last=null;
@@ -623,20 +831,28 @@ function resolveKey(key) {
 function openKey(rawKey) {
   const r = resolveKey(rawKey);
   if (!r) { toast("Ese texto es fijo del diseño."); return; }
+  if (r.page !== S.page) { S.page = r.page; S.openItems = {}; store.set("v_editor_page", r.page); renderPreview(true); }
   const schema = pageSchema(r.page);
+  if (!schema) return;
+  // whole section clicked
+  if (r.path.startsWith("@section:")) {
+    const sec = findSection(r.path.slice(9));
+    S.section = sec ? sec.id : null; renderSidebar(); return;
+  }
+  // find the section and field that own this path
   const ks = r.path.split(".");
-  const section = schema?.sections.find(s => s.fields.some(f => f.k === ks[0]));
-  if (!section) { toast("Ese texto es fijo del diseño."); return; }
-  const field = section.fields.find(f => f.k === ks[0]);
-  if (field.t === "list" && ks[1] != null) S.openItems[ks[0]] = Number(ks[1]);
-  const pageChanged = r.page !== S.page;
-  if (pageChanged) { S.page = r.page; store.set("v_editor_page", r.page); renderPreview(true); }
+  let section = null, field = null;
+  if (ks[0] === "blocks") { section = findSection(ks[1]); }
+  else section = schema.sections.find(s => s.fields.some(f => f.k === ks[0]));
+  if (section) field = section.fields.find(f => r.path === f.k || r.path.startsWith(f.k + "."));
+  if (!section || !field) { toast("Ese texto es fijo del diseño."); return; }
+  const rest = r.path.slice(field.k.length + 1).split(".").filter(Boolean);
+  if (field.t === "list" && rest[0] != null && /^\d+$/.test(rest[0])) S.openItems[field.k] = Number(rest[0]);
   S.section = section.id;
   renderSidebar();
-  // focus the exact field
   let target = $(`#sidebar [data-path="${CSS.escape(r.path)}"]`);
-  if (!target && field.t === "list" && ks[1] != null) target = $$("#sidebar .list-item")[Number(ks[1])];
-  if (!target) target = $(`#sidebar [data-path="${CSS.escape(ks[0])}"]`);
+  if (!target && field.t === "list" && rest[0] != null) target = $$(`#sidebar [data-path="${CSS.escape(field.k)}"] .list-item`)[Number(rest[0])] || $$("#sidebar .list-item")[Number(rest[0])];
+  if (!target) target = $(`#sidebar [data-path="${CSS.escape(field.k)}"]`);
   if (target) {
     target.scrollIntoView({ block: "center" });
     target.classList.add("flash"); setTimeout(() => target.classList.remove("flash"), 1300);

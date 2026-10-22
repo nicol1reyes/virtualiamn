@@ -175,3 +175,31 @@ svg{display:block}
   .sidebar{width:100%;height:50%;border-right:0;border-bottom:1px solid var(--border)}
   .canvas{padding:8px}
 }
+
+/* movable sections */
+.lay-list{display:flex;flex-direction:column;gap:2px}
+.lay-row{display:flex;align-items:center;gap:2px;border-radius:var(--r-sm);position:relative;background:var(--surface)}
+.lay-row:hover{background:var(--hover)}
+.lay-row.dragging{opacity:.4}
+.lay-row.drop-before::before,.lay-row.drop-after::after{content:"";position:absolute;left:6px;right:6px;height:2px;background:var(--focus);border-radius:2px}
+.lay-row.drop-before::before{top:-2px}
+.lay-row.drop-after::after{bottom:-2px}
+.grip{width:24px;height:32px;display:grid;place-items:center;border:0;background:none;color:var(--disabled);cursor:grab;border-radius:6px;flex-shrink:0}
+.grip:hover,.grip:focus-visible{color:var(--text)}
+.grip .ic{width:16px;height:16px}
+.lay-open{flex:1;min-width:0;display:flex;align-items:center;gap:10px;border:0;background:none;padding:8px 4px;text-align:left;color:var(--text)}
+.lay-open:disabled{cursor:default}
+.lay-open .ic{color:var(--subdued)}
+.lay-open .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lay-actions{display:flex;opacity:0;transition:opacity .12s}
+.lay-row:hover .lay-actions,.lay-row:focus-within .lay-actions,.lay-row.is-hidden .lay-actions{opacity:1}
+.lay-row.is-hidden .lay-open{color:var(--disabled)}
+.lay-row.is-hidden .lay-open .ic{color:var(--disabled)}
+.lay-row.is-hidden [data-dup],.lay-row.is-hidden [data-del]{display:none}
+.type-picker{display:flex;flex-direction:column;gap:2px;padding:6px;margin:2px 0 8px;border-radius:var(--r);box-shadow:inset 0 0 0 1px var(--border);background:var(--surface)}
+.type-opt{display:flex;align-items:flex-start;gap:10px;width:100%;padding:8px;border:0;background:none;border-radius:var(--r-sm);text-align:left}
+.type-opt:hover{background:var(--hover)}
+.type-opt .ic{color:var(--subdued);margin-top:1px}
+.type-opt b{display:block;font-weight:550}
+.type-opt small{display:block;color:var(--subdued);font-size:12px}
+@media (hover:none){.lay-actions{opacity:1}}
